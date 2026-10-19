@@ -102,3 +102,6 @@ Replace calls of any of those functions in our own library with proper requireme
 
 ❯ Isn't `@deprecated_installer` basically a duplicate to `@deprecated`  in `luckylucy.utils.functions.deprecated`?
 
+❯ Conversation compacted <kbd>manual</kbd>:
+> - [Result (`17895` chars, `17.5 KB`)](output/compact/002.f59207be-822c-43be-aa69-f7abf88f549e/result.md)
+
