@@ -96,3 +96,7 @@ example_package >= 1.0
 
 ❯ Basically the new packaging makes `from luckylucy.utils.install import import_or_install` and `pip_interface` etc. no longer needed, right?
 
+❯ OK, deprecate the functions in `luckylucy.utils.dependencies` themself.
+(Just `find_submodules`  and `import_only` should be fine for now)
+Replace calls of any of those functions in our own library with proper requirements and imports on top of the file.
+
