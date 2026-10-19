@@ -118,3 +118,5 @@ Same with `encoding.py`, and probably every file checking `sys.version`.
 2. The [`scripts/build_modules.py`](../scripts/build_modules.py) also needs a flag to publish it to pypi.
 3. Add unittest which uses `vermin` to check each file, and a hardcoded override dict.
 
+❯ Regarding **1.**: a `__init__.py` would only write it's own needs, so a subfile could make it result in a higher python version (and additional requires). The `build_modules.py` must handle that.
+
