@@ -1,6 +1,7 @@
 # luckylucy.utils
-###### A collection of utilities I use across different python projects.
-[![Build Status](https://travis-ci.org/luckydonald/luckydonald-utils.svg?branch=master)](https://travis-ci.org/luckydonald/luckydonald-utils)
+###### A collection of utilities I use across different python projects.<br><sup><sup>_Formerly [luckydonald-utils](https://github.com/luckydonald/luckydonald-utils)._</sup></sup>
+
+<!-- [![Build Status](https://travis-ci.org/luckydonald/luckydonald-utils.svg?branch=master)](https://travis-ci.org/luckydonald/luckydonald-utils) -->
 [![PyPI](https://img.shields.io/pypi/v/luckylucy.utils.svg)](https://pypi.python.org/pypi/luckylucy.utils)
 
 [Documentation](#luckylucyutils-documentation)
