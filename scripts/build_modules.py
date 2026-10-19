@@ -34,6 +34,7 @@ Everything else is derived:
 Usage:
     scripts/build_modules.py --list
     scripts/build_modules.py --out build/modules [--build]
+    scripts/build_modules.py --publish [--repository-url https://test.pypi.org/legacy/]
 
 Besides the distributions, a git-ignored `requirements.txt` with all third-party dependencies is written next to the root `pyproject.toml`.
 It lists the modules needing each requirement above it, so an IDE can install them and they are quick to verify.
@@ -436,6 +437,9 @@ def main() -> None:
     parser.add_argument("--requirements", type=Path, default=Path("requirements.txt"), help="where to write the dependencies of all modules")
     parser.add_argument("--list", action="store_true", help="only print the module tree")
     parser.add_argument("--build", action="store_true", help="run `uv build` for every generated distribution")
+    parser.add_argument("--publish", action="store_true", help="build, then upload every distribution with `twine`, skipping the ones already there")
+    parser.add_argument("--repository-url", help="upload here instead of PyPI, e.g. https://test.pypi.org/legacy/")
+    parser.add_argument("--username", default="luckydonald", help="user for the upload")
     args = parser.parse_args()
 
     root_project = tomllib.loads(args.pyproject.read_text(encoding="utf-8"))["project"]
@@ -448,10 +452,19 @@ def main() -> None:
     write_requirements(modules, args.requirements)
     projects = generate(args.source, modules, root_project, args.out)
     print(f"Generated {len(projects)} distributions in {args.out}")
-    if args.build:
+    if args.build or args.publish:
+        dist = args.out / "dist"
+        shutil.rmtree(dist, ignore_errors=True)  # only upload what was just built
         for project in projects:
-            subprocess.run(["uv", "build", "--out-dir", str(args.out / "dist"), str(project)], check=True)
+            subprocess.run(["uv", "build", "--out-dir", str(dist), str(project)], check=True)
         # end for
+        if args.publish:
+            command = ["uv", "run", "twine", "upload", "--username", args.username, "--skip-existing"]
+            if args.repository_url:
+                command += ["--repository-url", args.repository_url]
+            # end if
+            subprocess.run([*command, *map(str, sorted(dist.iterdir()))], check=True)
+        # end if
     # end if
 # end def
 

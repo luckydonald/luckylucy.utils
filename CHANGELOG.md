@@ -6,6 +6,7 @@ Changelog
 - Every module is installable on its own, e.g. `pip install luckylucy.utils.uvicorns.log_config`. The `luckylucy.utils` package installs all of them.
 - All of the packages share the same version.
 - Each module declares the oldest Python it works on as `requires-python`, e.g. `>=2.7, !=3.0.*`, instead of one shared minimum.
+- `scripts/build_modules.py --publish` builds and uploads every module to PyPI (`--repository-url` for another index), which `make pip` and `make test-pip` use.
 - Deprecated `import_or_install`, `install_only` and `upgrade` of `luckylucy.utils.dependencies`, packages are now installed as dependencies instead. `import_only` and `find_submodules` stay.
 - The modules import their third-party packages normally, they no longer install them at runtime. `djangos.middleware.access` now lists its `IPy` dependency, and `selfupdate` upgrades `luckylucy.utils` via `pip`.
 

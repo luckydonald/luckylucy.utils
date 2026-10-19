@@ -13,11 +13,11 @@ pip-build:
 dev-dependencies:
 	uv sync --group dev
 
-test-pip: pip-build dev-dependencies
-	uv run twine upload --username luckydonald --skip-existing --repository-url https://test.pypi.org/legacy/ build/modules/dist/*
+test-pip: dev-dependencies
+	uv run python scripts/build_modules.py --out build/modules --publish --repository-url https://test.pypi.org/legacy/
 
-pip: pip-build
-	uv run twine upload --username luckydonald --skip-existing build/modules/dist/*
+pip: dev-dependencies
+	uv run python scripts/build_modules.py --out build/modules --publish
 
 git:
 	git push

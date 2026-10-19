@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-
 # /// script
+# requires-python = ">=2.7"
+# dependencies = [
+#     "luckylucy.utils.compat",
+#     "luckylucy.utils.eastereggs",
+#     "luckylucy.utils.encoding",
+#     "luckylucy.utils.logger",
+# ]
+#
 # [tool.luckylucy]
 # module = true
 # ///
