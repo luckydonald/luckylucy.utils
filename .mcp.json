@@ -1,0 +1,59 @@
+{
+  "mcpServers": {
+    "bugsink": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "envmcp",
+        "--env-file",
+        "ai/.env",
+        "npx",
+        "-y",
+        "bugsink-mcp"
+      ]
+    },
+    "chrome-devtools": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "--autoConnect",
+        "--no-usage-statistics"
+      ]
+    },
+    "sync_todo": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "envmcp",
+        "--env-file",
+        "ai/.env",
+        "npx",
+        "-y",
+        "mcp-remote",
+        "\"$SYNC_TODO_MCP_URL\"",
+        "--header",
+        "\"Authorization:Bearer $SYNC_TODO_MCP_TOKEN\""
+      ]
+    },
+    "coolify": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "envmcp",
+        "--env-file",
+        "ai/.env",
+        "npx",
+        "-y",
+        "mcp-remote",
+        "\"$COOLIFY_URL\"",
+        "--header",
+        "\"Authorization:Bearer $COOLIFY_TOKEN\""
+      ]
+    }
+  }
+}
