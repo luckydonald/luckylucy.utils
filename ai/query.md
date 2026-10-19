@@ -105,3 +105,6 @@ Replace calls of any of those functions in our own library with proper requireme
 ❯ Conversation compacted <kbd>manual</kbd>:
 > - [Result (`17895` chars, `17.5 KB`)](output/compact/002.f59207be-822c-43be-aa69-f7abf88f549e/result.md)
 
+❯ Conversation compacted <kbd>manual</kbd>:
+> - [Result (`11339` chars, `11.1 KB`)](output/compact/003.f59207be-822c-43be-aa69-f7abf88f549e/result.md)
+
