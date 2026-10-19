@@ -1,5 +1,0 @@
-[project]
-dependencies = ["Pillow"]
-
-[tool.luckylucy]
-module = true

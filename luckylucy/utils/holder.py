@@ -1,5 +1,8 @@
-# /// luckylucy-module
+# /// script
 # dependencies = []
+#
+# [tool.luckylucy]
+# module = true
 # ///
 """
 Caches a result, and is able to return it. Useful in if statements.

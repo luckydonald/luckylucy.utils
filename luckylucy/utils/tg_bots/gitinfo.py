@@ -1,5 +1,8 @@
-# /// luckylucy-module
+# /// script
 # dependencies = ["flask", "teleflask"]
+#
+# [tool.luckylucy]
+# module = true
 # ///
 try:
     from gitinfo_values import __all__

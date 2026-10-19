@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# /// script
+# dependencies = []
+#
+# [tool.luckylucy]
+# module = true
+# ///
 from ..compat import py3
 from ..logger import logging
 from ..encoding import to_binary

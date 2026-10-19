@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# /// script
+# dependencies = []
+#
+# [tool.luckylucy]
+# module = true
+# ///
 import logging as _logging
 import sys
 

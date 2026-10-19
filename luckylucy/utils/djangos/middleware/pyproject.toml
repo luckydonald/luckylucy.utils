@@ -1,5 +1,0 @@
-[project]
-dependencies = ["django"]
-
-[tool.luckylucy]
-module = true

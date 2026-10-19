@@ -1,5 +1,0 @@
-[project]
-dependencies = ["pytz"]
-
-[tool.luckylucy]
-module = true

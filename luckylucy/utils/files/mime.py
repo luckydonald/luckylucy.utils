@@ -1,5 +1,8 @@
-# /// luckylucy-module
+# /// script
 # dependencies = ["python-magic"]
+#
+# [tool.luckylucy]
+# module = true
 # ///
 from ..dependencies import import_or_install
 

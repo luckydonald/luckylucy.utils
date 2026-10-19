@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-# /// luckylucy-module
+# /// script
 # dependencies = []
+#
+# [tool.luckylucy]
+# module = true
 # ///
 from .dependencies import upgrade
 
