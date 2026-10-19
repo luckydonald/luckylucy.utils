@@ -19,3 +19,39 @@
 
 ❯ [@`ai/todos.md`](./todos.md)
 
+❯ Question answered.
+> <details><summary>
+>
+>> 1. How should the new `luckylucy.utils` tree relate to the existing `luckydonaldUtils` code?
+>> 2. How should sub-packages be marked and built?
+>
+> (click to expand)
+>
+> </summary>
+>
+>> **Legacy** (1/2) <kbd>Single Select</kbd><br>
+>> How should the new `luckylucy.utils` tree relate to the existing `luckydonaldUtils` code?
+> - [ ] 1\. Copy, freeze legacy (Recommended)
+>   - _Copy modules to `luckylucy/utils/...` (snake_case, e.g. `uvicorns.log_config`); `luckydonaldUtils` stays untouched and keeps shipping as `luckydonald-utils` (frozen)._
+> - [ ] 2\. Move, legacy shims
+>   - _git mv code to `luckylucy/utils/`; `luckydonaldUtils` becomes thin re-export shims. Single source of truth, but legacy then does change._
+> - [ ] 3\. Move, drop legacy
+>   - _Rename outright; the old package is no longer built._
+> - [x] 4\. _Type something:_
+>   - > Move, drop legacy (it keeps existing in pypi and git history)
+>
+>> **Module marker** (2/2) <kbd>Single Select</kbd><br>
+>> How should sub-packages be marked and built?
+> - [ ] 1\. `module.toml` file (Recommended)
+>   - _A `module.toml` in a dir marks it as a distributable module (name, deps, extras). Clearer than a dunder, holds per-module deps, and no import-time cost. A build script generates one pyproject per module._
+> - [ ] 2\. `__is_luckylucyutils_module__ = True`
+>   - _Your suggestion: a dunder in `__init__.py`. Needs parsing via AST; deps would live elsewhere._
+> - [ ] 3\. `[tool.luckylucy]` in a per-dir pyproject.toml
+>   - _Each module dir carries its own real pyproject.toml; most standard, but most boilerplate._
+> - [x] 4\. _Type something:_
+>   - > I see both 1 and 3 having an appeal.
+What would a per-dir pyproject.toml look like for the given example?
+>
+> </details>
+>
+
