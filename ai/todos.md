@@ -10,12 +10,15 @@ If you are an agent tasked to process/fix this file:
 
 ## How to sync from CalDAV
 
-Source: `sync_todo` MCP, calendar `TODO: Today` (`calendar_id` 7). Each item ends with its todo `uid`.
+Source: `sync_todo` MCP, calendar `TODO: Today` (`calendar_id` 7). Each item ends with its todo `uid`, and may optionally include a quoted body the next lines.
 To complete one:
 1. tick the box - good to squash into the code commit
 2. call `mcp__sync_todo__complete_todo(calendar_id=7, uid=<uid>)`.
-3. Finally call `../../../Documents/programming/Python/DockerTgBot/scripts/sync_todos.py --project luckydonaldUtils --purge-missing --purge-complete` to update this file, which may add new tasks.
-   - Generally, leaving out the project is fine, too.
+3. Finally call `../../../Documents/programming/Python/DockerTgBot/scripts/sync_todos.py --project luckydonaldUtils` to update this file, which may add new tasks.
+   - Generally, leaving out the project parameter is fine, too, as this syncs all projects, which is what you want to do eventually anyway.
+   - If you specify the project you may also occasionally add flags to reduce the length, which may be good if you got more than 20 todos completed.
+     - Add `--purge-missing` if you want to remove items not tracked in the todo list. Still incompleted ones should be duplicated to the `sync_todo` MCP first.
+     - Add `--purge-complete` to clean up completed tasks.
 
 ## Todos synced from CalDAV
 
