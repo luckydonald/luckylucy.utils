@@ -1,5 +1,5 @@
 # /// script
-# requires-python = ">=3.8"
+# requires-python = ">=2.7"
 # dependencies = []
 # ///
 import errno

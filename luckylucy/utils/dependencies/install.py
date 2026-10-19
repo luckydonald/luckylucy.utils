@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # /// script
-# requires-python = ">=3.8"
+# requires-python = ">=2.7, !=3.0.*"
 # dependencies = [
 #     "setuptools",
 #     "luckylucy.utils.functions",

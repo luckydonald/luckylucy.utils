@@ -113,12 +113,29 @@ def merge(existing: list[str], new: list[str]) -> list[str]:
 # end def
 
 
-def minimum_version(requires_python: str) -> tuple[int, ...]:
-    match = re.fullmatch(r">=\s*(\d+(?:\.\d+)*)", requires_python.strip())
-    if match is None:
-        raise SystemExit(f"Only `>=X.Y` is supported as `requires-python`, got {requires_python!r}.")
+def parse_requires_python(requires_python: str) -> tuple[tuple[int, ...], set[tuple[int, int]]]:
+    """Only `>=X.Y` plus any `!=X.Y.*` are supported; returns the minimum and the excluded minor versions."""
+    minimum: tuple[int, ...] | None = None
+    excluded: set[tuple[int, int]] = set()
+    for part in requires_python.split(","):
+        part = part.strip()
+        if (match := re.fullmatch(r">=\s*(\d+(?:\.\d+)*)", part)) is not None:
+            minimum = tuple(int(number) for number in match.group(1).split("."))
+        elif (match := re.fullmatch(r"!=\s*(\d+)\.(\d+)\.\*", part)) is not None:
+            excluded.add((int(match.group(1)), int(match.group(2))))
+        else:
+            raise SystemExit(f"Only `>=X.Y` and `!=X.Y.*` are supported as `requires-python`, got {requires_python!r}.")
+        # end if
+    # end for
+    if minimum is None:
+        raise SystemExit(f"`requires-python` needs a `>=X.Y`, got {requires_python!r}.")
     # end if
-    return tuple(int(part) for part in match.group(1).split("."))
+    return minimum, excluded
+# end def
+
+
+def minimum_version(requires_python: str) -> tuple[int, ...]:
+    return parse_requires_python(requires_python)[0]
 # end def
 
 
@@ -127,7 +144,10 @@ def merge_requires_python(existing: str | None, new: str | None) -> str | None:
     if existing is None or new is None:
         return existing or new
     # end if
-    return existing if minimum_version(existing) >= minimum_version(new) else new
+    (low_a, gaps_a), (low_b, gaps_b) = parse_requires_python(existing), parse_requires_python(new)
+    low = max(low_a, low_b)
+    gaps = sorted(gap for gap in gaps_a | gaps_b if gap >= low[:2])
+    return ", ".join([">=" + ".".join(map(str, low)), *(f"!={major}.{minor}.*" for major, minor in gaps)])
 # end def
 
 

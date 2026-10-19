@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # /// script
-# requires-python = ">=3.8"
+# requires-python = ">=3.0"
 # dependencies = [
 #     "luckylucy.utils.encoding",
 #     "luckylucy.utils.holder",
