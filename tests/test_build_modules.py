@@ -123,6 +123,14 @@ class BuildModulesTest(unittest.TestCase):
         # end for
     # end def
 
+    def test_init_with_its_own_needs_is_raised_by_its_files(self) -> None:
+        write(self.source / "web" / "__init__.py", block(["flask"], True, ">=2.7") + "from ..logger import x\n")
+        write(self.source / "web" / "new.py", block(["jinja2"], False, ">=3.10"))
+        web = discover(self.source)["luckylucy.utils.web"]
+        self.assertEqual(web.requires_python, ">=3.10", "the file raises the minimum of the `__init__.py`")
+        self.assertEqual(web.external_dependencies, ["flask", "requests", "jinja2"], "both are required")
+    # end def
+
     def test_requires_python_keeps_excluded_versions(self) -> None:
         self.assertEqual(
             merge_requires_python(">=2.7, !=3.0.*", ">=2.7, !=3.0.*, !=3.1.*"), ">=2.7, !=3.0.*, !=3.1.*", "the gaps add up",
