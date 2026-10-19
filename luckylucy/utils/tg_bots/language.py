@@ -1,5 +1,8 @@
-# /// luckylucy-module
+# /// script
 # dependencies = ["pytgbot"]
+#
+# [tool.luckylucy]
+# module = true
 # ///
 from typing import Type, Dict, TypeVar, Union, Optional
 

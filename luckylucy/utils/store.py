@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-# /// luckylucy-module
+# /// script
 # dependencies = ["pycryptodome", "usersettings"]
+#
+# [tool.luckylucy]
+# module = true
 # ///
 
 import base64

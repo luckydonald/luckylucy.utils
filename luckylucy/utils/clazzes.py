@@ -1,5 +1,8 @@
-# /// luckylucy-module
+# /// script
 # dependencies = []
+#
+# [tool.luckylucy]
+# module = true
 # ///
 try:
     from collections.abc import Mapping  # py3

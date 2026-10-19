@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# /// script
+# dependencies = []
+#
+# [tool.luckylucy]
+# module = true
+# ///
 from typing import Union, Any, List, Dict
 
 # from luckylucy.utils.logger import logging

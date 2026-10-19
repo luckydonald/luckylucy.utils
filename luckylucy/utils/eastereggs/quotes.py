@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-# /// luckylucy-module
+# /// script
 # dependencies = ["weakreflist"]
+#
+# [tool.luckylucy]
+# module = true
 # ///
 """
 NOT PY2 ready!

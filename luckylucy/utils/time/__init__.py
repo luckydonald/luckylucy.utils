@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# /// script
+# dependencies = ["pytz"]
+#
+# [tool.luckylucy]
+# module = true
+# ///
 
 import sys
 from ..dependencies import import_or_install

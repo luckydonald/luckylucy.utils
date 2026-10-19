@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-# /// luckylucy-module
+# /// script
 # dependencies = []
+#
+# [tool.luckylucy]
+# module = true
 # ///
 from .logger import logging
 from .functions import deprecated

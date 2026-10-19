@@ -1,5 +1,8 @@
-# /// luckylucy-module
+# /// script
 # dependencies = ["typing_extensions"]
+#
+# [tool.luckylucy]
+# module = true
 # ///
 from typing_extensions import Any
 

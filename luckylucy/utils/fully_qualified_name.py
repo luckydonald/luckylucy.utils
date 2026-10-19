@@ -1,5 +1,8 @@
-# /// luckylucy-module
+# /// script
 # dependencies = []
+#
+# [tool.luckylucy]
+# module = true
 # ///
 __all__ = (
     'fqn',
