@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # /// script
-# requires-python = ">=3.8"
+# requires-python = ">=3.5"
 # dependencies = []
 # ///
 import subprocess

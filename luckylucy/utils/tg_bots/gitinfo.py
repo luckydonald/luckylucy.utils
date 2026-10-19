@@ -1,5 +1,5 @@
 # /// script
-# requires-python = ">=3.8"
+# requires-python = ">=3.2"
 # dependencies = [
 #     "flask",
 #     "teleflask",

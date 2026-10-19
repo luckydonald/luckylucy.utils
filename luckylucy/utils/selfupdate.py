@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 # /// script
-# requires-python = ">=3.8"
-# dependencies = []
+# requires-python = ">=2.7"
+# dependencies = [
+#     "luckylucy.utils.decorators",
+# ]
 #
 # [tool.luckylucy]
 # module = true

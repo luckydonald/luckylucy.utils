@@ -5,7 +5,7 @@ import unittest
 from pathlib import Path
 
 from scripts.build_modules import (
-    ROOT_NAME, discover, generate, imported_names, owner_of, parent_name, read_metadata, render_requirements, resolve,
+    ROOT_NAME, discover, generate, imported_names, merge_requires_python, owner_of, parent_name, read_metadata, render_requirements, resolve,
     write_requirements,
 )
 
@@ -84,6 +84,17 @@ class BuildModulesTest(unittest.TestCase):
             project = tomllib.loads((Path(self.temp.name) / "out" / f"luckylucy.utils.{name}" / "pyproject.toml").read_text())["project"]
             self.assertEqual(project["requires-python"], expected)
         # end for
+    # end def
+
+    def test_requires_python_keeps_excluded_versions(self) -> None:
+        self.assertEqual(
+            merge_requires_python(">=2.7, !=3.0.*", ">=2.7, !=3.0.*, !=3.1.*"), ">=2.7, !=3.0.*, !=3.1.*", "the gaps add up",
+        )
+        self.assertEqual(merge_requires_python(">=2.7, !=3.0.*", ">=3.5"), ">=3.5", "a gap below the minimum is irrelevant")
+        self.assertEqual(merge_requires_python(">=2.7", None), ">=2.7")
+        with self.assertRaises(SystemExit):
+            merge_requires_python(">=2.7", "<4")
+        # end with
     # end def
 
     def test_internal_dependencies_in_a_block(self) -> None:

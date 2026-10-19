@@ -1,5 +1,5 @@
 # /// script
-# requires-python = ">=3.8"
+# requires-python = ">=2.7, !=3.0.*, !=3.1.*"
 # dependencies = [
 #     "luckylucy.utils.clazzes",
 # ]

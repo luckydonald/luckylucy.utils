@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # /// script
-# requires-python = ">=3.8"
+# requires-python = ">=3.6"
 # dependencies = [
 #     "pytgbot",
 #     "requests",

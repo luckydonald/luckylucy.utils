@@ -1,5 +1,5 @@
 # /// script
-# requires-python = ">=3.8"
+# requires-python = ">=2.7"
 # dependencies = []
 # ///
 def create_hierarchic_dict(files, separator="/"):
