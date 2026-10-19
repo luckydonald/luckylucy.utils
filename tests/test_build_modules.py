@@ -1,3 +1,4 @@
+import json
 import tempfile
 import tomllib
 import unittest
@@ -18,39 +19,62 @@ def write(path: Path, text: str) -> None:
 # end def
 
 
+def block(dependencies: list[str], module: bool) -> str:
+    lines = ["# /// script", f"# dependencies = {json.dumps(dependencies)}"]
+    if module:
+        lines += ["#", "# [tool.luckylucy]", "# module = true"]
+    # end if
+    return "\n".join([*lines, "# ///", ""])
+# end def
+
+
 class BuildModulesTest(unittest.TestCase):
     def setUp(self) -> None:
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.source = Path(self.temp.name) / "luckylucy" / "utils"
-        write(self.source / "logger" / "__init__.py", "x = 1\n")
-        write(self.source / "logger" / "pyproject.toml", "[tool.luckylucy]\nmodule = true\n")
-        write(self.source / "web" / "__init__.py", "from ..logger import x\n")
-        write(self.source / "web" / "pyproject.toml", '[project]\ndependencies = ["flask"]\n[tool.luckylucy]\nmodule = true\n')
-        write(self.source / "web" / "helper.py", "y = 1\n")
-        write(self.source / "web" / "extra.py", "# /// luckylucy-module\n# dependencies = [\"pytz\"]\n# ///\nfrom . import helper\n")
-        write(self.source / "plain.py", "# /// luckylucy-module\n# ///\nfrom luckylucy.utils.logger import x\n")
+        write(self.source / "logger" / "__init__.py", block([], True) + "x = 1\n")
+        write(self.source / "web" / "__init__.py", block(["flask"], True) + "from ..logger import x\n")
+        write(self.source / "web" / "helper.py", block(["requests"], False) + "y = 1\n")
+        write(self.source / "web" / "unmarked.py", "z = 1\n")
+        write(self.source / "web" / "extra.py", block(["pytz"], True) + "from . import helper\n")
+        write(self.source / "plain.py", block([], True) + "from luckylucy.utils.logger import x\n")
+        write(self.source / "old" / "__init__.py", "")
+        write(self.source / "old" / "pyproject.toml", '[project]\ndependencies = ["attrs"]\n[tool.luckylucy]\nmodule = true\n')
     # end def
 
     def test_discover(self) -> None:
         modules = discover(self.source)
         self.assertEqual(
             sorted(modules),
-            ["luckylucy.utils.logger", "luckylucy.utils.plain", "luckylucy.utils.web", "luckylucy.utils.web.extra"],
+            [
+                "luckylucy.utils.logger", "luckylucy.utils.old", "luckylucy.utils.plain", "luckylucy.utils.web",
+                "luckylucy.utils.web.extra",
+            ],
         )
-        self.assertEqual(modules["luckylucy.utils.web"].external_dependencies, ["flask"])
         self.assertEqual(modules["luckylucy.utils.web.extra"].external_dependencies, ["pytz"])
+        self.assertEqual(modules["luckylucy.utils.old"].external_dependencies, ["attrs"], "a `pyproject.toml` marker still works")
         self.assertEqual(
-            sorted(file.name for file in modules["luckylucy.utils.web"].files), ["__init__.py", "helper.py"],
-            "the file module and the marker must not be part of the directory module",
+            sorted(file.name for file in modules["luckylucy.utils.web"].files), ["__init__.py", "helper.py", "unmarked.py"],
+            "the file module and the markers must not be part of the folder module",
         )
     # end def
 
-    def test_unmarked_file_is_an_error(self) -> None:
+    def test_dependencies_of_files_are_merged_into_the_folder(self) -> None:
+        modules = discover(self.source)
+        self.assertEqual(modules["luckylucy.utils.web"].external_dependencies, ["flask", "requests"])
+    # end def
+
+    def test_file_outside_of_a_module_is_an_error(self) -> None:
         write(self.source / "orphan.py", "z = 1\n")
         with self.assertRaises(SystemExit):
             discover(self.source)
         # end with
+    # end def
+
+    def test_block_of_another_type_is_ignored(self) -> None:
+        write(self.source / "web" / "other.py", "# /// something-else\n# dependencies = [\"nope\"]\n# ///\n")
+        self.assertEqual(discover(self.source)["luckylucy.utils.web"].external_dependencies, ["flask", "requests"])
     # end def
 
     def test_resolve(self) -> None:
@@ -73,7 +97,7 @@ class BuildModulesTest(unittest.TestCase):
         web = tomllib.loads((out / "luckylucy.utils.web" / "pyproject.toml").read_text())["project"]
         self.assertEqual(web["version"], "1.2")
         self.assertEqual(
-            web["dependencies"], ["flask", "luckylucy.utils.logger==1.2", "luckylucy.utils.web.extra==1.2"],
+            web["dependencies"], ["flask", "requests", "luckylucy.utils.logger==1.2", "luckylucy.utils.web.extra==1.2"],
             "imports and inner modules are depended on, with the shared version",
         )
         self.assertTrue((out / "luckylucy.utils.web" / "luckylucy" / "utils" / "web" / "helper.py").is_file())
@@ -82,7 +106,7 @@ class BuildModulesTest(unittest.TestCase):
         root = tomllib.loads((out / ROOT_NAME / "pyproject.toml").read_text())
         self.assertEqual(
             root["project"]["dependencies"],
-            ["luckylucy.utils.logger==1.2", "luckylucy.utils.plain==1.2", "luckylucy.utils.web==1.2"],
+            ["luckylucy.utils.logger==1.2", "luckylucy.utils.old==1.2", "luckylucy.utils.plain==1.2", "luckylucy.utils.web==1.2"],
             "the root depends on all top level modules, but not the nested ones",
         )
     # end def
