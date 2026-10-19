@@ -120,3 +120,5 @@ Same with `encoding.py`, and probably every file checking `sys.version`.
 
 ❯ Regarding **1.**: a `__init__.py` would only write it's own needs, so a subfile could make it result in a higher python version (and additional requires). The `build_modules.py` must handle that.
 
+❯ Fix [@`ai/errors/1.txt`](./errors/1.txt)
+
