@@ -2,15 +2,19 @@
 """
 Generates one distribution per marked `luckylucy.utils` module, so each one is installable on its own.
 
-A module is marked in one of two ways, both only listing the module specific `dependencies`:
+The markers are standard PEP 723 inline blocks at the top of a file, which can also list the `dependencies` of that file:
+```py
+# /// script
+# dependencies = ["uvicorn"]
+#
+# [tool.luckylucy]
+# module = true
+# ///
+```
 
-- A directory with a `pyproject.toml` containing `[tool.luckylucy] module = true`.
-- A single file with an inline block at the top:
-  ```py
-  # /// luckylucy-module
-  # dependencies = ["uvicorn"]
-  # ///
-  ```
+- `module = true` in a file makes that file a distribution of its own.
+- `module = true` in the block of an `__init__.py` (or in a `pyproject.toml` with `[tool.luckylucy]`) makes that folder a distribution.
+- Every other file is part of its closest folder module, and its `dependencies` are merged into the ones of that folder.
 
 Everything else is derived:
 
@@ -36,9 +40,17 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 ROOT_NAME = "luckylucy.utils"
-INLINE_BLOCK = re.compile(r"^# /// luckylucy-module\n(?P<body>(?:#(?: .*)?\n)*?)# ///$", re.MULTILINE)
+# The reference regex of PEP 723.
+INLINE_BLOCK = re.compile(r"(?m)^# /// (?P<type>[a-zA-Z0-9-]+)$\s(?P<content>(^#(| .*)$\s)+)^# ///$")
 IGNORED_FILES = {"pyproject.toml"}
 IGNORED_DIRS = {"__pycache__"}
+
+
+@dataclass
+class Metadata:
+    dependencies: list[str]
+    module: bool
+# end class
 
 
 @dataclass
@@ -53,28 +65,36 @@ class Module:
 # end class
 
 
-def read_inline_dependencies(path: Path) -> list[str] | None:
-    """Returns the dependencies of a file module, or `None` if the file has no `luckylucy-module` block."""
-    match = INLINE_BLOCK.search(path.read_text(encoding="utf-8"))
-    if match is None:
-        return None
+def read_metadata(path: Path) -> Metadata | None:
+    """Reads the PEP 723 `script` block of a python file, or the `pyproject.toml` of a folder, `None` if there is none."""
+    if path.is_dir():
+        pyproject = path / "pyproject.toml"
+        if not pyproject.is_file():
+            return None
+        # end if
+        data = tomllib.loads(pyproject.read_text(encoding="utf-8"))
+        return Metadata(
+            list(data.get("project", {}).get("dependencies", [])),
+            bool(data.get("tool", {}).get("luckylucy", {}).get("module", False)),
+        )
     # end if
-    body = "\n".join(line[2:] for line in match.group("body").splitlines())
-    return list(tomllib.loads(body).get("dependencies", []))
+    for match in INLINE_BLOCK.finditer(path.read_text(encoding="utf-8")):
+        if match.group("type") != "script":
+            continue
+        # end if
+        content = "".join(line[2:] if line.startswith("# ") else line[1:] for line in match.group("content").splitlines(keepends=True))
+        data = tomllib.loads(content)
+        return Metadata(
+            list(data.get("dependencies", [])),
+            bool(data.get("tool", {}).get("luckylucy", {}).get("module", False)),
+        )
+    # end for
+    return None
 # end def
 
 
-def read_directory_dependencies(path: Path) -> list[str] | None:
-    """Returns the dependencies of a directory module, or `None` if the directory isn't marked."""
-    pyproject = path / "pyproject.toml"
-    if not pyproject.is_file():
-        return None
-    # end if
-    data = tomllib.loads(pyproject.read_text(encoding="utf-8"))
-    if not data.get("tool", {}).get("luckylucy", {}).get("module", False):
-        return None
-    # end if
-    return list(data.get("project", {}).get("dependencies", []))
+def merge(existing: list[str], new: list[str]) -> list[str]:
+    return [*existing, *(dependency for dependency in new if dependency not in existing)]
 # end def
 
 
@@ -86,34 +106,43 @@ def dotted(source_root: Path, path: Path) -> str:
 
 def discover(source_root: Path) -> dict[str, Module]:
     """Finds all marked modules below the source root and assigns each of the files to the closest module."""
+    paths = [
+        path for path in sorted(source_root.rglob("*"))
+        if not any(part in IGNORED_DIRS for part in path.parts) and path.suffix != ".pyc"
+    ]
     modules: dict[str, Module] = {}
-    for path in sorted(source_root.rglob("*")):
-        if any(part in IGNORED_DIRS for part in path.parts):
-            continue
-        # end if
+    metadata: dict[Path, Metadata] = {}
+    for path in paths:
         if path.is_dir():
-            dependencies = read_directory_dependencies(path)
-            if dependencies is not None:
-                modules[dotted(source_root, path)] = Module(dotted(source_root, path), path, False, dependencies)
+            found = read_metadata(path)
+            if found is not None and found.module:
+                modules[dotted(source_root, path)] = Module(dotted(source_root, path), path, False, found.dependencies)
             # end if
         elif path.suffix == ".py":
-            dependencies = read_inline_dependencies(path)
-            if dependencies is not None:
-                modules[dotted(source_root, path)] = Module(dotted(source_root, path), path, True, dependencies)
+            found = read_metadata(path)
+            if found is None:
+                continue
+            # end if
+            metadata[path] = found
+            if not found.module:
+                continue
+            # end if
+            if path.name == "__init__.py":
+                name = dotted(source_root, path.parent)
+                modules.setdefault(name, Module(name, path.parent, False, []))
+            else:
+                modules[dotted(source_root, path)] = Module(dotted(source_root, path), path, True, found.dependencies)
             # end if
         # end if
     # end for
 
     directories = {module.path: module for module in modules.values() if not module.is_file}
-    for path in sorted(source_root.rglob("*")):
-        if path.is_dir() or path.name in IGNORED_FILES or path.suffix == ".pyc":
-            continue
-        # end if
-        if any(part in IGNORED_DIRS for part in path.parts):
+    for path in paths:
+        if path.is_dir() or path.name in IGNORED_FILES:
             continue
         # end if
         file_module = modules.get(dotted(source_root, path))
-        if path.suffix == ".py" and file_module is not None and file_module.is_file:
+        if file_module is not None and file_module.is_file and file_module.path == path:
             file_module.files.append(path)
             continue
         # end if
@@ -124,11 +153,14 @@ def discover(source_root: Path) -> dict[str, Module]:
         owner = next((directories[parent] for parent in path.parents if parent in directories), None)
         if owner is None:
             if path.suffix in {".py", ".pyi"}:
-                raise SystemExit(f"{path} is not part of any module, add a `luckylucy-module` marker to it.")
+                raise SystemExit(f"{path} is not part of any module, mark it with `module = true` or put it into a folder module.")
             # end if
             continue
         # end if
         owner.files.append(path)
+        if path in metadata:
+            owner.external_dependencies = merge(owner.external_dependencies, metadata[path].dependencies)
+        # end if
     # end for
     return modules
 # end def

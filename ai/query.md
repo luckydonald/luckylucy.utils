@@ -75,3 +75,16 @@ Notice though that the example `pip install luckylucy.utils.uvicorns.log_config`
 
 ❯ Plan accepted, auto mode.
 
+❯ Plan denied:
+> The user doesn't want to proceed with this tool use. The tool use was rejected (eg. if it was a file edit, the new_string was NOT written to the file). To tell you how to proceed, the user said:
+> > The block type is the real PEP 723 # /// script, so uv run file.py and editors understand it, instead of the custom luckylucy-module type. Only dependencies is read, other keys are ignored.
+>
+> Probably adapting the `[tool.luckylucy] module = true` somehow still makes sense, so we can mark dependencies without building a separate package for it.
+>
+> > A file without a block is still a module with no third-party dependencies, so the "file is not part of any module" error goes away and new files just work.
+>
+> No, if it's not having a marker, it's not a package of it's own; it will be part of the parent folder, if that one has a `pyproject.toml`.
+> Ah, we can use `__init__.py` though.
+>
+> Note: The user's next message may contain a correction or preference. Pay close attention — if they explain what went wrong or how they'd prefer you to work, consider saving that to memory for future sessions.
+
