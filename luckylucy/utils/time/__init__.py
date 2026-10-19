@@ -41,5 +41,5 @@ def _loop_seconds_between_times(datetime1, datetime2):
     delta = datetime2 - datetime1
     seconds = delta.total_seconds()
     for x in range(0, int(seconds)):
-        yield (datetime1 + datetime.timedelta(seconds=x))
+        yield datetime1 + datetime.timedelta(seconds=x)
     yield datetime2  # so loop_seconds_between_times(dat,dat) is at least called once with dat.
