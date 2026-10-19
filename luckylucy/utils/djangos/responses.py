@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "django",
+#     "luckylucy.utils.dependencies",
+#     "luckylucy.utils.logger",
+# ]
+# ///
 try:
     from django.http import JsonResponse, HttpResponse
     from django.conf import settings

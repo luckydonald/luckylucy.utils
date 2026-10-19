@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # /// script
-# dependencies = []
-#
 # [tool.luckylucy]
 # module = true
 # ///

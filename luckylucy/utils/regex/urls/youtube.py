@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+# /// script
+# requires-python = ">=3.8"
+# dependencies = []
+# ///
 import re
 
 __author__ = 'luckydonald'

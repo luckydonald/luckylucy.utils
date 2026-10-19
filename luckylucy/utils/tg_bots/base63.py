@@ -1,3 +1,9 @@
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "luckylucy.utils.encoding",
+# ]
+# ///
 from base64 import urlsafe_b64encode, urlsafe_b64decode
 from luckylucy.utils.encoding import to_native as n, to_binary as b
 import re

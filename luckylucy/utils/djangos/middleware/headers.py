@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "luckylucy.utils.eastereggs",
+#     "luckylucy.utils.logger",
+# ]
+# ///
 
 from ...eastereggs.headers import get_headers as get_easteregg_headers
 from ...logger import logging  # pip install luckydonald-utils

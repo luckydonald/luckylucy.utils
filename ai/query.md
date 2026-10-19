@@ -75,3 +75,9 @@ Notice though that the example `pip install luckylucy.utils.uvicorns.log_config`
 
 ❯ Plan accepted, auto mode.
 
+❯ Conversation compacted <kbd>manual</kbd>:
+> - [Result (`14898` chars, `14.5 KB`)](output/compact/001.b5fdff4c-98f5-4bf9-847c-2795fe186186/result.md)
+
+❯ For every python file, analyze which dependencies it has, and fill the `/// script\ndependencies = []` accordingly. Use multiline for that list. Also fill in `requires-python` for each file. Note that another `luckylucy.utils` import is a dependency, too.
+Also I believe, `__init__.py` files should not specify `dependencies` or `requires-python` on their own, as they eventually just depend on their submodules, so only `[tool.luckylucy]\nmodule = true`, right? The rest is filled recursively by the script for the deploy packages?
+

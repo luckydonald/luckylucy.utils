@@ -1,5 +1,9 @@
 # /// script
-# dependencies = ["flask", "teleflask"]
+# requires-python = ">=3.8"
+# dependencies = [
+#     "flask",
+#     "teleflask",
+# ]
 #
 # [tool.luckylucy]
 # module = true

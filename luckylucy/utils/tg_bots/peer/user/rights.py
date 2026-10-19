@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "pytgbot",
+#     "luckylucy.utils.dependencies",
+#     "luckylucy.utils.logger",
+# ]
+# ///
 from typing import Union
 
 from ....dependencies import import_or_install

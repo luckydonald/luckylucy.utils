@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "luckylucy.utils.logger",
+# ]
+# ///
 # https://code.google.com/p/modwsgi/wiki/ReloadingSourceCode
 """
 Add auto reloading capabilities.

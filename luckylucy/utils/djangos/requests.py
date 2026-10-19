@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "django",
+#     "luckylucy.utils.dependencies",
+# ]
+# ///
 """
 Tools to use with django's HttpRequests.
 """

@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "pytgbot",
+#     "requests",
+#     "teleflask",
+#     "luckylucy.utils.logger",
+#     "luckylucy.utils.regex.urls",
+# ]
+# ///
 import os
 import json
 from datetime import datetime, timedelta

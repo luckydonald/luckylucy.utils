@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "luckylucy.utils.eastereggs.quotes",
+# ]
+# ///
 from random import choice
 from .quotes import get_quote
 from .ponies import WAIFU

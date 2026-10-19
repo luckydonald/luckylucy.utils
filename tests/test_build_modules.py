@@ -4,7 +4,7 @@ import tomllib
 import unittest
 from pathlib import Path
 
-from scripts.build_modules import ROOT_NAME, discover, generate, parent_name, resolve
+from scripts.build_modules import ROOT_NAME, discover, generate, imported_names, owner_of, parent_name, read_metadata, resolve
 
 REPOSITORY = Path(__file__).parent.parent
 ROOT_PROJECT = {
@@ -19,8 +19,12 @@ def write(path: Path, text: str) -> None:
 # end def
 
 
-def block(dependencies: list[str], module: bool) -> str:
-    lines = ["# /// script", f"# dependencies = {json.dumps(dependencies)}"]
+def block(dependencies: list[str], module: bool, requires_python: str | None = None) -> str:
+    lines = ["# /// script"]
+    if requires_python:
+        lines.append(f'# requires-python = "{requires_python}"')
+    # end if
+    lines.append(f"# dependencies = {json.dumps(dependencies)}")
     if module:
         lines += ["#", "# [tool.luckylucy]", "# module = true"]
     # end if
@@ -63,6 +67,32 @@ class BuildModulesTest(unittest.TestCase):
     def test_dependencies_of_files_are_merged_into_the_folder(self) -> None:
         modules = discover(self.source)
         self.assertEqual(modules["luckylucy.utils.web"].external_dependencies, ["flask", "requests"])
+    # end def
+
+    def test_requires_python_is_merged_into_the_folder(self) -> None:
+        write(self.source / "web" / "new.py", block([], False, ">=3.10"))
+        write(self.source / "web" / "old.py", block([], False, ">=3.9"))
+        modules = discover(self.source)
+        self.assertEqual(modules["luckylucy.utils.web"].requires_python, ">=3.10")
+        self.assertIsNone(modules["luckylucy.utils.logger"].requires_python)
+        resolve(self.source, modules)
+        generate(self.source, modules, ROOT_PROJECT, Path(self.temp.name) / "out")
+        for name, expected in (("web", ">=3.10"), ("logger", ">=3.8")):
+            project = tomllib.loads((Path(self.temp.name) / "out" / f"luckylucy.utils.{name}" / "pyproject.toml").read_text())["project"]
+            self.assertEqual(project["requires-python"], expected)
+        # end for
+    # end def
+
+    def test_internal_dependencies_in_a_block(self) -> None:
+        write(self.source / "web" / "uses.py", block(["luckylucy.utils.plain"], False))
+        modules = discover(self.source)
+        self.assertEqual(modules["luckylucy.utils.web"].external_dependencies, ["flask", "requests"], "not an external dependency")
+        resolve(self.source, modules)
+        self.assertEqual(modules["luckylucy.utils.web"].imported_modules, {"luckylucy.utils.logger", "luckylucy.utils.plain"})
+        write(self.source / "web" / "typo.py", block(["luckylucy.utils.nope"], False))
+        with self.assertRaises(SystemExit):
+            resolve(self.source, discover(self.source))
+        # end with
     # end def
 
     def test_file_outside_of_a_module_is_an_error(self) -> None:
@@ -109,6 +139,23 @@ class BuildModulesTest(unittest.TestCase):
             ["luckylucy.utils.logger==1.2", "luckylucy.utils.old==1.2", "luckylucy.utils.plain==1.2", "luckylucy.utils.web==1.2"],
             "the root depends on all top level modules, but not the nested ones",
         )
+    # end def
+
+    def test_repository_blocks_list_the_imported_modules(self) -> None:
+        source = REPOSITORY / "luckylucy" / "utils"
+        modules = discover(source)
+        owners = {file: module.name for module in modules.values() for file in module.files}
+        for file, own in owners.items():
+            metadata = read_metadata(file)
+            if file.suffix != ".py" or file.name == "__init__.py" and metadata is not None and metadata.module:
+                continue  # the folder marker is filled in by the script
+            # end if
+            self.assertIsNotNone(metadata, f"{file} has no `# /// script` block")
+            declared = {dependency for dependency in metadata.dependencies if dependency.startswith(ROOT_NAME + ".")}
+            imported = {o for name in imported_names(source, file) if (o := owner_of(name, modules)) and o != own}
+            self.assertEqual(declared, imported, f"{file}: the block must list the `{ROOT_NAME}` modules it imports")
+            self.assertTrue(metadata.requires_python, f"{file} has no `requires-python`")
+        # end for
     # end def
 
     def test_repository_modules_are_consistent(self) -> None:

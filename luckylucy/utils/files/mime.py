@@ -1,5 +1,9 @@
 # /// script
-# dependencies = ["python-magic"]
+# requires-python = ">=3.8"
+# dependencies = [
+#     "python-magic",
+#     "luckylucy.utils.dependencies",
+# ]
 #
 # [tool.luckylucy]
 # module = true
