@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from luckydonaldUtils.logger import logging
+from luckylucy.utils.logger import logging
 
 try:
     from .pip_interface import pip_install

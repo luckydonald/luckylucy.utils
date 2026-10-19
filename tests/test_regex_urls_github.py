@@ -2,7 +2,7 @@
 import unittest
 from collections import OrderedDict
 
-from luckydonaldUtils.regex.github import FILE_URL_REGEX, AT_USERNAME_REGEX
+from luckylucy.utils.regex.github import FILE_URL_REGEX, AT_USERNAME_REGEX
 __author__ = 'luckydonald'
 
 

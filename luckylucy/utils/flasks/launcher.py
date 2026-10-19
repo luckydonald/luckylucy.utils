@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from luckydonaldUtils.logger import logging
+from luckylucy.utils.logger import logging
 import typing
 
 __author__ = 'luckydonald'
@@ -37,7 +37,7 @@ class Launcher(object):
 
     you simply do
 
-        >>> from luckydonaldUtils.flasks.launcher import Launcher
+        >>> from luckylucy.utils.flasks.launcher import Launcher
         >>>
         >>> with Launcher(__name__, host='0.0.0.0', port=8080, debug=True) as l:
         >>>     from somewhere import main

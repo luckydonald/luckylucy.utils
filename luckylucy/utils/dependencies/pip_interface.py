@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-from luckydonaldUtils.logger import logging
+from luckylucy.utils.logger import logging
 
 
-from luckydonaldUtils.logger import logging
+from luckylucy.utils.logger import logging
 from pip.commands.install import InstallCommand
 from pip.baseparser import ConfigOptionParser
 from pip.exceptions import PipError

@@ -16,11 +16,11 @@ Via pip:
 `$` `pip install --upgrade luckydonald-utils`
 
 Using the package:
-`$` `python -m luckydonaldUtils.selfupdate`
+`$` `python -m luckylucy.utils.selfupdate`
 
 From python interpreter:
 ```python
-from luckydonaldUtils import selfupdate
+from luckylucy.utils import selfupdate
 ```
 
 ### Install from source
@@ -28,16 +28,16 @@ from luckydonaldUtils import selfupdate
     - Download a release from [PyPi](https://pypi.python.org/pypi/luckydonald-utils) or [Github](https://github.com/luckydonald/python-utils/releases/),
     - or clone the latest code from Github:
     `$` `git clone https://github.com/luckydonald/luckydonald-utils.git && cd luckydonald-utils`
-- Navigate into the `luckydonaldUtils` folder and run
+- Navigate into the `luckylucy.utils` folder and run
     `$` `python setup.py install`
 
 ### Update from source
 - If you manually downloaded your version, just follow the install steps again using a new version.
-- If you cloned the code, navigate into the `luckydonaldUtils` folder and run
+- If you cloned the code, navigate into the `luckylucy.utils` folder and run
     `$` `git pull && python setup.py install`
 
 
-## ```luckydonaldUtils``` Documentation:
+## ```luckylucy.utils``` Documentation:
 *(not a complete list)*
 
 #### ```clazzes```
@@ -82,11 +82,11 @@ Utilities for django.
 		- ```AllowFromIPMiddleware```: [v0.31](https://github.com/luckydonald/python-utils/releases/tag/v0.31)+
 			Allow only given IPs to access, else raises a `Http404` error. Is will be ignored when `DEBUG` is `True`, or `settings.ALLOW_FROM` is `None`.
 			Set in the *settings.py* file: ```ALLOW_FROM = ["134.169.0.0/16"]```
-			Include in your ```MIDDLEWARE_CLASSES```: ```"luckydonaldUtils.djangos.middleware.access.AllowFromIPMiddleware"```
+			Include in your ```MIDDLEWARE_CLASSES```: ```"luckylucy.utils.djangos.middleware.access.AllowFromIPMiddleware"```
 	- ```header```:
 		- ```EastereggHeadersMiddleware```: [v0.34](https://github.com/luckydonald/python-utils/releases/tag/v0.34)
 			Sets some funny headers.
-			Include in your ```MIDDLEWARE_CLASSES```: ```"luckydonaldUtils.djangos.middleware.headers.EastereggHeadersMiddleware"```
+			Include in your ```MIDDLEWARE_CLASSES```: ```"luckylucy.utils.djangos.middleware.headers.EastereggHeadersMiddleware"```
 #### ```exceptions```
 Exception related stuff.
 
@@ -183,7 +183,7 @@ elif temp2:
 Somebody need to **hold** that result for you:
 
 ```python
-from luckydonaldUtils.holder import Holder
+from luckylucy.utils.holder import Holder
 h = Holder()
 if h(do_something()) == 42:
     foo(h())

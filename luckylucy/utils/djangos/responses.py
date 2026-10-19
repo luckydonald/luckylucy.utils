@@ -124,7 +124,7 @@ def render_specific_exception(exception_class, exception_render_func=None):
         ...
 
     Import it
-    >>> from luckydonaldUtils.djangos import render_specific_exception
+    >>> from luckylucy.utils.djangos import render_specific_exception
 
 
     How to use

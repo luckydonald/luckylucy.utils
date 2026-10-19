@@ -30,7 +30,7 @@ Homepage = "https://github.com/luckydonald/luckydonald-utils"
 dev = ["bump-my-version", "twine", "keyring"]
 
 [tool.setuptools.dynamic]
-version = { attr = "luckydonaldUtils.__version__" }
+version = { attr = "luckylucy.utils.__version__" }
 
 [tool.setuptools.packages.find]
-include = ["luckydonaldUtils", "luckydonaldUtils.*"]
+include = ["luckylucy.utils", "luckylucy.utils.*"]

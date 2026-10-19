@@ -1,7 +1,7 @@
 import sys
 
 import unittest
-from luckydonaldUtils.regex.urls import URL_REGEX
+from luckylucy.utils.regex.urls import URL_REGEX
 
 
 class MyTestCase(unittest.TestCase):

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from typing import Union, Any, List, Dict
 
-# from luckydonaldUtils.logger import logging
+# from luckylucy.utils.logger import logging
 
 __author__ = 'luckydonald'
 __all__ = ["JSONType"]

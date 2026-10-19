@@ -1,6 +1,6 @@
 import unittest
-from luckydonaldUtils.functions import caller, CallerResult
-from luckydonaldUtils.logger import logging
+from luckylucy.utils.functions import caller, CallerResult
+from luckylucy.utils.logger import logging
 logging.add_colored_handler(level=logging.DEBUG)
 
 

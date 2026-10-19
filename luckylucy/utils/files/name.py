@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from luckydonaldUtils.files import logger
-from luckydonaldUtils.logger import logging
+from luckylucy.utils.files import logger
+from luckylucy.utils.logger import logging
 
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)

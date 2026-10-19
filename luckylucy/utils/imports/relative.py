@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from luckydonaldUtils.logger import logging
+from luckylucy.utils.logger import logging
 
 __author__ = 'luckydonald'
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import pip
-from luckydonaldUtils.logger import logging
+from luckylucy.utils.logger import logging
 
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)

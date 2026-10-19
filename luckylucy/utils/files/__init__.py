@@ -13,7 +13,7 @@ __all__ = [
     'get_file_suffix', 'do_a_filename', 'gettempdir'
 ]
 __IMPORT_CHANGED_MESSAGE = (
-    "Import path changed. Please import {func_name} from luckydonaldUtils.files.{where} instead. "
+    "Import path changed. Please import {func_name} from luckylucy.utils.files.{where} instead. "
     "This import will be removed in the future."
 )
 

@@ -151,9 +151,9 @@ def assert_type_or_raise(value, expected_type_clazz_or_tuple, *more_clazzes, exc
 
 
 def assert_or_raise(*args, **kwargs):
-    warnings.warn("The `luckydonaldUtils.exceptions.assert_or_raise` method is deprecated, "
+    warnings.warn("The `luckylucy.utils.exceptions.assert_or_raise` method is deprecated, "
                   "use `assert_type_or_raise` instead", DeprecationWarning, 2)
-    logger.warn("Deprecated: `luckydonaldUtils.exceptions.assert_or_raise` was renamed to `assert_type_or_raise`.")
+    logger.warn("Deprecated: `luckylucy.utils.exceptions.assert_or_raise` was renamed to `assert_type_or_raise`.")
     return assert_type_or_raise(*args, **kwargs)
 
 # end def

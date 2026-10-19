@@ -7,7 +7,7 @@ from typing import List, Dict
 
 import requests
 
-from luckydonaldUtils.logger import logging
+from luckylucy.utils.logger import logging
 
 from pytgbot.api_types.receivable.media import Sticker
 from pytgbot.api_types.receivable.updates import Message, Update

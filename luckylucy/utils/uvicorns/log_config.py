@@ -21,7 +21,7 @@ def get_uvicorn_log_config(*, disable_existing_loggers: bool = False, project: s
     # alembic/env.py
     # # Import:
     from logging.config import dictConfig
-    from luckydonaldUtils.uvicorns.log_config import get_uvicorn_log_config
+    from luckylucy.utils.uvicorns.log_config import get_uvicorn_log_config
 
     # Replacing/adding any `*Config` lines - i.e. `dictConfig(…)` or `fileConfig(…)`.
     dictConfig(get_uvicorn_log_config(disable_existing_loggers=False, project="your_app"))

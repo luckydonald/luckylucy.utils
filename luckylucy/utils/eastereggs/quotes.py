@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 NOT PY2 ready!
->>> from luckydonaldUtils.eastereggs.quotes import get_quote
+>>> from luckylucy.utils.eastereggs.quotes import get_quote
 >>> get_quote("de")
 >>> get_quote()
 """

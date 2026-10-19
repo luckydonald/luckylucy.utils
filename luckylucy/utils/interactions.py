@@ -6,7 +6,7 @@ try:
     from .exceptions import assert_type_or_raise
 except (ImportError, SystemError):
     # non-relative imports to enable doctests
-    from luckydonaldUtils.exceptions import assert_type_or_raise
+    from luckylucy.utils.exceptions import assert_type_or_raise
 # end try
 
 __author__ = 'luckydonald'

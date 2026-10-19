@@ -7,7 +7,7 @@ Use in your wsgi file like this:
 
 >>> import os
 >>>
->>> from luckydonaldUtils.network.mod_wsgi import reloader
+>>> from luckylucy.utils.network.mod_wsgi import reloader
 >>> reloader.start(interval=1.0)
 >>> reloader.track(os.path.join(os.path.dirname(__file__), 'site.cf'))
 >>>
@@ -20,7 +20,7 @@ from __future__ import print_function
 
 __author__ = 'luckydonald'
 
-from luckydonaldUtils.logger import logging  # pip install luckydonald-utils
+from luckylucy.utils.logger import logging  # pip install luckylucy.utils
 
 logger = logging.getLogger(__name__)
 

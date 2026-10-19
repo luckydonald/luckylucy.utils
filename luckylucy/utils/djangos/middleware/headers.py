@@ -10,7 +10,7 @@ class EastereggHeadersMiddleware(object):
     """
     Sets some funny headers.
 
-    Include in your `MIDDLEWARE_CLASSES: "luckydonaldUtils.djangos.middleware.headers.EastereggHeadersMiddleware"
+    Include in your `MIDDLEWARE_CLASSES: "luckylucy.utils.djangos.middleware.headers.EastereggHeadersMiddleware"
     """
     def process_response(self, request, response):
         for header_key, header_value in get_easteregg_headers().items():

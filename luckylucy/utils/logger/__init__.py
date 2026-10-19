@@ -470,7 +470,7 @@ class LevelByNameFilter(object):
 # end class
 
 # # Test code to get a threaded logger:
-# from luckydonaldUtils.logger import logging;import threading; from time import sleep;
+# from luckylucy.utils.logger import logging;import threading; from time import sleep;
 # def lel():
 #     logger.debug(threading.current_thread().name)
 #     logging.test_logger_levels(),logger.critical("littlepip is\nBEST\npony!")

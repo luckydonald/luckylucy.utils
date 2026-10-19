@@ -4,7 +4,7 @@ try:
     from .encoding import binary_type, text_type
 except (ImportError, SystemError):
     # non-relative imports to enable doctests
-    from luckydonaldUtils.encoding import binary_type, text_type
+    from luckylucy.utils.encoding import binary_type, text_type
 # end if
 
 __author__ = 'luckydonald'

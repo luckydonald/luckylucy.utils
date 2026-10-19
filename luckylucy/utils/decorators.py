@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from luckydonaldUtils.logger import logging  # pip install luckydonald-utils
+from luckylucy.utils.logger import logging  # pip install luckylucy.utils
 from .functions import __all__ as _functions_all
 # noinspection PyUnresolvedReferences
 from .functions import *  # because everyone searches for the decorators in this file ... lel.

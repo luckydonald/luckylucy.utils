@@ -14,7 +14,7 @@ except ImportError:  # pragma nocover
 # end try
 
 
-from luckydonaldUtils.logger import logging
+from luckylucy.utils.logger import logging
 
 __author__ = 'luckydonald'
 

@@ -1,5 +1,5 @@
 from base64 import urlsafe_b64encode, urlsafe_b64decode
-from luckydonaldUtils.encoding import to_native as n, to_binary as b
+from luckylucy.utils.encoding import to_native as n, to_binary as b
 import re
 
 REPLACEMENTS = {"-": "_0", "_": "_1"}
