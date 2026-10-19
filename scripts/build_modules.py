@@ -463,7 +463,8 @@ def main() -> None:
             if args.repository_url:
                 command += ["--repository-url", args.repository_url]
             # end if
-            subprocess.run([*command, *map(str, sorted(dist.iterdir()))], check=True)
+            uploads = sorted(path for path in dist.iterdir() if path.suffix == ".whl" or path.name.endswith(".tar.gz"))  # `uv build` adds a `.gitignore`
+            subprocess.run([*command, *map(str, uploads)], check=True)
         # end if
     # end if
 # end def
