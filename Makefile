@@ -8,16 +8,16 @@ delete-compiled-shit:
 upload: pip git
 
 pip-build:
-	uv build
+	uv run python scripts/build_modules.py --out build/modules --build
 
 dev-dependencies:
 	uv sync --group dev
 
 test-pip: pip-build dev-dependencies
-	uv run twine upload --username luckydonald --skip-existing --repository-url https://test.pypi.org/legacy/ dist/*
+	uv run twine upload --username luckydonald --skip-existing --repository-url https://test.pypi.org/legacy/ build/modules/dist/*
 
 pip: pip-build
-	uv run twine upload --username luckydonald --skip-existing dist/*
+	uv run twine upload --username luckydonald --skip-existing build/modules/dist/*
 
 git:
 	git push
