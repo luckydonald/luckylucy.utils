@@ -11,9 +11,8 @@
 # ]
 # ///
 import os
-import json
 from datetime import datetime, timedelta
-from typing import List, Dict
+from typing import List
 
 import requests
 
@@ -61,7 +60,6 @@ class BotMessage(object):
 # end class
 
 
-# noinspection PyCompatibility
 class CacheData(object):
     enabled: bool
     next_send: datetime
