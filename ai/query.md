@@ -92,3 +92,5 @@ example_package >= 1.0
 
 ❯ Also make sure the `luckylucy.utils` requirements are correct in the files with imports starting with  `from .` , e.g. `from .files import gettempdir` or `from ...logger import logging`
 
+❯ However, the IDE shows `Relative import outside of a package` warning, is that relevant due to the packaging structure?
+
