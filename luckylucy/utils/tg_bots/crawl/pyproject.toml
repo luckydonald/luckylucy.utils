@@ -1,0 +1,5 @@
+[project]
+dependencies = ["pytgbot", "requests", "teleflask"]
+
+[tool.luckylucy]
+module = true

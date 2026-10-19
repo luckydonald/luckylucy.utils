@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# /// luckylucy-module
+# dependencies = ["pycryptodome", "usersettings"]
+# ///
 
 import base64
 from .dependencies import import_or_install

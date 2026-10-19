@@ -1,3 +1,6 @@
+# /// luckylucy-module
+# dependencies = []
+# ///
 try:
     from collections.abc import Mapping  # py3
 except ImportError:

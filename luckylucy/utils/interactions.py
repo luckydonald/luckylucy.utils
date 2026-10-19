@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# /// luckylucy-module
+# dependencies = []
+# ///
 import getpass
 import math
 

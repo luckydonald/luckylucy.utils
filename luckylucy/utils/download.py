@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# /// luckylucy-module
+# dependencies = ["DictObject", "python-magic", "progressbar33", "requests"]
+# ///
 
 from __future__ import division
 

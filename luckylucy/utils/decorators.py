@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# /// luckylucy-module
+# dependencies = []
+# ///
 from luckylucy.utils.logger import logging  # pip install luckylucy.utils
 from .functions import __all__ as _functions_all
 # noinspection PyUnresolvedReferences

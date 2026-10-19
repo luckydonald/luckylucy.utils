@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# /// luckylucy-module
+# dependencies = []
+# ///
 import re
 try:
     from .encoding import binary_type, text_type

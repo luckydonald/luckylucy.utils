@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# /// luckylucy-module
+# dependencies = []
+# ///
 from collections import defaultdict
 
 __author__ = 'luckydonald'

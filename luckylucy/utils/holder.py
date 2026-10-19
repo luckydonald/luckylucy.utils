@@ -1,3 +1,6 @@
+# /// luckylucy-module
+# dependencies = []
+# ///
 """
 Caches a result, and is able to return it. Useful in if statements.
 

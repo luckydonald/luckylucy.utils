@@ -1,3 +1,6 @@
+# /// luckylucy-module
+# dependencies = ["flask", "teleflask"]
+# ///
 try:
     from gitinfo_values import __all__
 except:

@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# /// luckylucy-module
+# dependencies = []
+# ///
 from luckylucy.utils.logger import logging
 
 __author__ = 'luckydonald'

@@ -1,3 +1,6 @@
+# /// luckylucy-module
+# dependencies = []
+# ///
 from datetime import datetime, timedelta
 
 import functools

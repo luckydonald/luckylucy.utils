@@ -1,3 +1,6 @@
+# /// luckylucy-module
+# dependencies = []
+# ///
 __all__ = (
     'fqn',
 )

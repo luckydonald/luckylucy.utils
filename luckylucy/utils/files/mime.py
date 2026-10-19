@@ -1,3 +1,6 @@
+# /// luckylucy-module
+# dependencies = ["python-magic"]
+# ///
 from ..dependencies import import_or_install
 
 try:

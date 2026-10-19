@@ -1,3 +1,6 @@
+# /// luckylucy-module
+# dependencies = ["pytgbot"]
+# ///
 from typing import Type, Dict, TypeVar, Union, Optional
 
 from ..exceptions import assert_type_or_raise

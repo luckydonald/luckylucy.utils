@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+# /// luckylucy-module
+# dependencies = ["weakreflist"]
+# ///
 """
 NOT PY2 ready!
 >>> from luckylucy.utils.eastereggs.quotes import get_quote

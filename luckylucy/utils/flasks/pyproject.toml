@@ -1,0 +1,5 @@
+[project]
+dependencies = ["flask", "werkzeug"]
+
+[tool.luckylucy]
+module = true

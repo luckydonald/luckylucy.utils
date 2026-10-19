@@ -1,0 +1,5 @@
+[project]
+dependencies = ["pip", "setuptools"]
+
+[tool.luckylucy]
+module = true

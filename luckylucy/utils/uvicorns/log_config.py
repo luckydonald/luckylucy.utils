@@ -1,3 +1,6 @@
+# /// luckylucy-module
+# dependencies = ["typing_extensions"]
+# ///
 from typing_extensions import Any
 
 from ..fully_qualified_name import fqn
