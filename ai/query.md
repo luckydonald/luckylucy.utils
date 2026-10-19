@@ -108,3 +108,8 @@ Replace calls of any of those functions in our own library with proper requireme
 ❯ Conversation compacted <kbd>manual</kbd>:
 > - [Result (`11339` chars, `11.1 KB`)](output/compact/003.f59207be-822c-43be-aa69-f7abf88f549e/result.md)
 
+❯ Looking at `compat.py`, I daubt it's just `requires-python = ">=3.8"`.
+That file reads like supporting `2.7` and `3`.
+Usually in `3.0` the `u"string"` were not implemented, so if the code uses those, it's not compatible with `3.0` but only `3.1+`.
+Same with `encoding.py`, and probably every file checking `sys.version`.
+
