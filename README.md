@@ -25,30 +25,36 @@ Switch to `luckylucy.utils` and replace the imports, e.g. `from luckydonaldUtils
 
 
 ### Update
-Via pip:
+Via pip:<br>
 `$` `pip install --upgrade luckylucy.utils`
 
-Using the package:
-`$` `python -m luckylucy.utils.selfupdate`
+<details>
+<summary>Deprecated <code>selfupdate</code></summary>
 
-From python interpreter:
-```python
-from luckylucy.utils import selfupdate
-```
+> **Deprecated since [v0.85](https://github.com/luckydonald/luckylucy.utils/releases/tag/v0.85)+**
+> 
+> Using the package:<br>
+> `$` `python -m luckylucy.utils.selfupdate`
+>
+> From python interpreter:
+> ```python
+> from luckylucy.utils import selfupdate
+> ```
+
+</details>
 
 ### Install from source
 - Get the source
     - Download a release from [PyPi](https://pypi.python.org/pypi/luckylucy.utils) or [Github](https://github.com/luckydonald/luckydonald-utils/releases/),
-    - or clone the latest code from Github:
-    `$` `git clone https://github.com/luckydonald/luckydonald-utils.git && cd luckydonald-utils`
-- Generate and build the packages:
+    - or clone the latest code from Github:<br>
+      `$` `git clone https://github.com/luckydonald/luckydonald-utils.git && cd luckydonald-utils`
+- Generate and build the packages:<br>
     `$` `uv run python scripts/build_modules.py --build`
-    The wheels end up in `build/modules/dist`.
+    <br>The wheels end up in `build/modules/dist`.
 
 ### Update from source
 - If you manually downloaded your version, just follow the install steps again using a new version.
 - If you cloned the code, run `git pull` and build again.
-
 
 ### Adding a module
 Modules are marked with a standard [PEP 723](https://peps.python.org/pep-0723/) block at the top of a file.
