@@ -1,7 +1,7 @@
 Changelog
 =========
-0.85 (Unreleased)
-----------
+1.85.pre1
+----
 - Renamed the package from `luckydonaldUtils` to `luckylucy.utils`, now published as `luckylucy.utils` instead of `luckydonald-utils`. The old `luckydonald-utils` is not updated any more.
 - Every module is installable on its own, e.g. `pip install luckylucy.utils.uvicorns.log_config`. The `luckylucy.utils` package installs all of them.
 - All of the packages share the same version.
@@ -9,7 +9,21 @@ Changelog
 - `scripts/build_modules.py --publish` builds and uploads every module to PyPI (`--repository-url` for another index, `--username __token__` for an API token), which `make pip` and `make test-pip` use.
 - Deprecated `import_or_install`, `install_only` and `upgrade` of `luckylucy.utils.dependencies`, packages are now installed as dependencies instead. `import_only` and `find_submodules` stay.
 - The modules import their third-party packages normally, they no longer install them at runtime. `djangos.middleware.access` now lists its `IPy` dependency, and `selfupdate` upgrades `luckylucy.utils` via `pip`.
+- It is very likely that it's not working from the get-go and may need some fixes.
 
+
+
+0.85
+----
+A yanked unfinished upload of `1.85` above. 
+
+0.84
+----
+- Last `luckydonaldUtils` release, before the package was renamed to `luckylucy.utils`. The old `luckydonald-utils` is not updated any more.
+
+…
+---
+- Kindly look at git log for the missing history
 
 0.54
 ----
