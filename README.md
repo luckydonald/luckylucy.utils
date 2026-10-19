@@ -31,7 +31,7 @@ Via pip:<br>
 <details>
 <summary>Deprecated <code>selfupdate</code></summary>
 
-> **Deprecated since [v0.85](https://github.com/luckydonald/luckylucy.utils/releases/tag/v0.85)+**
+> **Deprecated since [v1.85.pre1](https://github.com/luckydonald/luckylucy.utils/releases/tag/v1.85.pre1)+**
 > 
 > Using the package:<br>
 > `$` `python -m luckylucy.utils.selfupdate`
@@ -180,7 +180,7 @@ Utilities for importing and import related stuff. [v0.77](https://github.com/luc
     - `relimport`: Basically like [`os.path.relpath`](https://docs.python.org/3.7/library/os.path.html#os.path.relpath), but for dot delimited import paths.
 
 #### ```dependencies```
-Utilities for installing packages at import time. Deprecated. [v0.3](https://github.com/luckydonald/python-utils/releases/tag/v0.3)<sub><sup>_ish_<sup></sub> — [v0.85](https://github.com/luckydonald/luckylucy.utils/releases/tag/v0.85)
+Utilities for installing packages at import time. Deprecated. [v0.3](https://github.com/luckydonald/python-utils/releases/tag/v0.3)<sub><sup>_ish_<sup></sub> — [v1.85.pre1](https://github.com/luckydonald/luckylucy.utils/releases/tag/v1.85.pre1)
 
 #### ```jinja2```
 Utilities for the jinja templating engine.
