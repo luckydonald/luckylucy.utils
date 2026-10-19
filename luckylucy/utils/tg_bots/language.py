@@ -1,5 +1,10 @@
 # /// script
-# dependencies = ["pytgbot"]
+# requires-python = ">=3.8"
+# dependencies = [
+#     "pytgbot",
+#     "luckylucy.utils.dependencies",
+#     "luckylucy.utils.exceptions",
+# ]
 #
 # [tool.luckylucy]
 # module = true

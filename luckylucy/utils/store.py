@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 # /// script
-# dependencies = ["pycryptodome", "usersettings"]
+# requires-python = ">=3.8"
+# dependencies = [
+#     "pycryptodome",
+#     "usersettings",
+#     "luckylucy.utils.dependencies",
+# ]
 #
 # [tool.luckylucy]
 # module = true

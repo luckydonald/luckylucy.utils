@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 # /// script
-# dependencies = ["weakreflist"]
+# requires-python = ">=3.8"
+# dependencies = [
+#     "weakreflist",
+#     "luckylucy.utils.dependencies",
+# ]
 #
 # [tool.luckylucy]
 # module = true

@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.8"
+# dependencies = []
+# ///
 def create_hierarchic_dict(files, separator="/"):
     tree = {}
     for file in files:

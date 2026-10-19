@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "teleflask",
+#     "luckylucy.utils.logger",
+# ]
+# ///
 from luckylucy.utils.logger import logging
 from teleflask import TBlueprint
 from .sticker import sticker_crawl_tbp

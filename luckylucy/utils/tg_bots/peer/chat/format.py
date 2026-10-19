@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "pytgbot",
+#     "luckylucy.utils.logger",
+# ]
+# ///
 from html import escape
 
 from pytgbot.api_types.receivable.peer import Chat

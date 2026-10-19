@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.8"
+# dependencies = []
+# ///
 import errno
 import os
 import tempfile

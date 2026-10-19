@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # /// script
-# dependencies = ["pytz"]
+# dependencies = [
+#     "pytz",
+# ]
 #
 # [tool.luckylucy]
 # module = true

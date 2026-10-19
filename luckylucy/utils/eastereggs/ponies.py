@@ -1,3 +1,7 @@
+# /// script
+# requires-python = ">=3.8"
+# dependencies = []
+# ///
 from typing import Union, List, Tuple
 
 WAIFU = [
