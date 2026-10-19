@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # /// script
+# requires-python = ">=3.5"
 # [tool.luckylucy]
 # module = true
 # ///

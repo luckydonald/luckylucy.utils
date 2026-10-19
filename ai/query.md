@@ -113,3 +113,8 @@ That file reads like supporting `2.7` and `3`.
 Usually in `3.0` the `u"string"` were not implemented, so if the code uses those, it's not compatible with `3.0` but only `3.1+`.
 Same with `encoding.py`, and probably every file checking `sys.version`.
 
+❯ More to fix:
+1. `__init__.py`s containing code have no `requires-python`
+2. The [`scripts/build_modules.py`](../scripts/build_modules.py) also needs a flag to publish it to pypi.
+3. Add unittest which uses `vermin` to check each file, and a hardcoded override dict.
+

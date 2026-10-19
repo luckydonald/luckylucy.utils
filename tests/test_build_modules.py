@@ -1,11 +1,15 @@
+import ast
 import json
+import re
+import subprocess
+import sys
 import tempfile
 import tomllib
 import unittest
 from pathlib import Path
 
 from scripts.build_modules import (
-    ROOT_NAME, discover, generate, imported_names, merge_requires_python, owner_of, parent_name, read_metadata, render_requirements, resolve,
+    ROOT_NAME, Metadata, discover, generate, imported_names, merge_requires_python, owner_of, parent_name, read_metadata, render_requirements, resolve,
     write_requirements,
 )
 
@@ -32,6 +36,39 @@ def block(dependencies: list[str], module: bool, requires_python: str | None = N
         lines += ["#", "# [tool.luckylucy]", "# module = true"]
     # end if
     return "\n".join([*lines, "# ///", ""])
+# end def
+
+
+# `vermin` can't tell where a version check guards the old code, or see runtime evaluated annotations.
+REQUIRES_PYTHON_OVERRIDES = {
+    "encoding.py": ">=2.7",  # the python 2 code is behind `sys.version`
+    "json.py": ">=2.7",  # `iteritems` is behind `py2`
+    "uvicorns/log_config.py": ">=3.10",  # `str | None` in an annotation
+}
+
+
+def vermin_command() -> list[str] | None:
+    for command in ([sys.executable, "-m", "vermin"], ["uvx", "vermin"]):
+        try:
+            if subprocess.run([*command, "--version"], capture_output=True).returncode == 0:
+                return command
+            # end if
+        except OSError:
+            pass
+        # end try
+    # end for
+    return None
+# end def
+
+
+def requires_python_from_vermin(minimum: str) -> str:
+    """`~2, ~3` is anything, `2.7, 3.2` is python 2.7 and from 3.2 on, `3.6` is python 3 only. Python 2 starts at 2.7."""
+    parts = [part.strip() for part in minimum.split(",")]
+    if len(parts) == 1:
+        return ">=2.7" if parts[0].startswith("2.") else ">=" + parts[0]
+    # end if
+    minor_3 = 0 if parts[1].startswith("~") else int(parts[1].split(".")[1])
+    return ">=2.7" + "".join(f", !=3.{minor}.*" for minor in range(minor_3))
 # end def
 
 
@@ -179,14 +216,41 @@ class BuildModulesTest(unittest.TestCase):
         owners = {file: module.name for module in modules.values() for file in module.files}
         for file, own in owners.items():
             metadata = read_metadata(file)
-            if file.suffix != ".py" or file.name == "__init__.py" and metadata is not None and metadata.module:
+            has_code = any(
+                not (isinstance(node, ast.Expr) and isinstance(node.value, ast.Constant)) for node in ast.parse(file.read_text()).body
+            )
+            if file.suffix != ".py" or file.name == "__init__.py" and metadata is not None and metadata.module and not has_code:
                 continue  # the folder marker is filled in by the script
             # end if
             self.assertIsNotNone(metadata, f"{file} has no `# /// script` block")
-            declared = {dependency for dependency in metadata.dependencies if dependency.startswith(ROOT_NAME + ".")}
-            imported = {o for name in imported_names(source, file) if (o := owner_of(name, modules)) and o != own}
+            declared = {dependency for dependency in metadata.dependencies if dependency.startswith(ROOT_NAME + ".") and not dependency.startswith(own + ".")}
+            imported = {o for name in imported_names(source, file) if (o := owner_of(name, modules)) and o != own and not o.startswith(own + ".")}  # inner modules are depended on anyway
             self.assertEqual(declared, imported, f"{file}: the block must list the `{ROOT_NAME}` modules it imports")
             self.assertTrue(metadata.requires_python, f"{file} has no `requires-python`")
+        # end for
+    # end def
+
+    def test_repository_requires_python_matches_vermin(self) -> None:
+        command = vermin_command()
+        if command is None:
+            self.skipTest("`vermin` is not available")
+        # end if
+        source = REPOSITORY / "luckylucy" / "utils"
+        for file in sorted(source.rglob("*.py")):
+            declared = (read_metadata(file) or Metadata([], False)).requires_python
+            if declared is None:
+                continue  # a folder marker, filled in from its files
+            # end if
+            relative = file.relative_to(source).as_posix()
+            with self.subTest(file=relative):
+                output = subprocess.run(
+                    [*command, "--no-tips", "--eval-annotations", str(file)], capture_output=True, text=True,
+                ).stdout
+                match = re.search(r"Minimum required versions: (.*)", output)
+                self.assertIsNotNone(match, f"`vermin` found no version for {relative}")
+                expected = REQUIRES_PYTHON_OVERRIDES.get(relative) or requires_python_from_vermin(match.group(1))
+                self.assertEqual(declared, expected, f"{relative}: `requires-python` differs from `vermin` ({match.group(1)})")
+            # end with
         # end for
     # end def
 

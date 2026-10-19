@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 # /// script
+# requires-python = ">=2.7"
 # dependencies = [
 #     "pytz",
+#     "luckylucy.utils.logger",
 # ]
 #
 # [tool.luckylucy]
