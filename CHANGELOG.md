@@ -1,5 +1,12 @@
 Changelog
 =========
+Unreleased
+----------
+- Renamed the package from `luckydonaldUtils` to `luckylucy.utils`, now published as `luckylucy.utils` instead of `luckydonald-utils`. The old `luckydonald-utils` is not updated any more.
+- Every module is installable on its own, e.g. `pip install luckylucy.utils.uvicorns.log_config`. The `luckylucy.utils` package installs all of them.
+- All of the packages share the same version.
+
+
 0.54
 ----
 - Added optional `parameter_name` to `assert_type_or_raise`.
