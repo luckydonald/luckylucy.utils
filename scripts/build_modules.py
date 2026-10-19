@@ -439,7 +439,7 @@ def main() -> None:
     parser.add_argument("--build", action="store_true", help="run `uv build` for every generated distribution")
     parser.add_argument("--publish", action="store_true", help="build, then upload every distribution with `twine`, skipping the ones already there")
     parser.add_argument("--repository-url", help="upload here instead of PyPI, e.g. https://test.pypi.org/legacy/")
-    parser.add_argument("--username", default="luckydonald", help="user for the upload")
+    parser.add_argument("--username", help="user for the upload, `__token__` for an API token; defaults to what `twine` finds (`TWINE_USERNAME`, `~/.pypirc`)")
     args = parser.parse_args()
 
     root_project = tomllib.loads(args.pyproject.read_text(encoding="utf-8"))["project"]
@@ -459,7 +459,10 @@ def main() -> None:
             subprocess.run(["uv", "build", "--out-dir", str(dist), str(project)], check=True)
         # end for
         if args.publish:
-            command = ["uv", "run", "twine", "upload", "--username", args.username, "--skip-existing"]
+            command = ["uv", "run", "twine", "upload", "--skip-existing"]
+            if args.username:
+                command += ["--username", args.username]
+            # end if
             if args.repository_url:
                 command += ["--repository-url", args.repository_url]
             # end if
