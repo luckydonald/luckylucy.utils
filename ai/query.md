@@ -58,3 +58,5 @@ What would a per-dir pyproject.toml look like for the given example?
 ❯ keep those two examples in the plan as path of decision, and go for the hybrid.
 Notice though that the example `pip install luckylucy.utils.uvicorns.log_config` relates to [`luckydonaldUtils/uvicorns/log_config.py`](../luckydonaldUtils/uvicorns/log_config.py), so a file, not a directory
 
+❯ It should then prefer per-file PEP 723, and automatically fill in everything above it, including merging the dependencies for that folder's files, etc.
+
