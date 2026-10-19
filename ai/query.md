@@ -75,3 +75,6 @@ Notice though that the example `pip install luckylucy.utils.uvicorns.log_config`
 
 ❯ Plan accepted, auto mode.
 
+❯ Conversation compacted <kbd>manual</kbd>:
+> - [Result (`14898` chars, `14.5 KB`)](output/compact/001.b5fdff4c-98f5-4bf9-847c-2795fe186186/result.md)
+
