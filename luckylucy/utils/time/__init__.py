@@ -9,15 +9,10 @@
 # ///
 
 import sys
-from ..dependencies import import_or_install
 from ..logger import logging
 import datetime as datetime
 
-try:
-    from pytz import timezone
-except ImportError:  # pragma nocover
-    timezone = import_or_install("pytz.timezone", "pytz")
-# end try
+from pytz import timezone
 
 __author__ = 'luckydonald'
 __all__ = ["get_local_time", "loop_seconds_between_times"]

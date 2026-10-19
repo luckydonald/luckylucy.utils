@@ -3,19 +3,10 @@
 # requires-python = ">=3.8"
 # dependencies = [
 #     "django",
-#     "luckylucy.utils.dependencies",
 #     "luckylucy.utils.eastereggs",
 # ]
 # ///
 from functools import wraps
-
-try:
-    from django.utils.decorators import available_attrs
-except ImportError:  # pragma nocover
-    from ..dependencies import import_or_install
-
-    available_attrs = import_or_install("django.utils.decorators.available_attrs", "django")
-# end try
 
 from ..eastereggs.headers import get_headers  as get_easteregg_headers
 
@@ -39,7 +30,7 @@ def headers(*headers_as_dict, **headers_as_kwargs):
     """
 
     def headers_wrapper(fun):
-        @wraps(fun, assigned=available_attrs(fun))
+        @wraps(fun)
         def wrapped_function(*args, **kwargs):
             response = fun(*args, **kwargs)
             for arg in headers_as_dict:
@@ -84,7 +75,7 @@ def header(name, value):
     #
     # Taken from https://djangosnippets.org/snippets/2895/
     def decorator(func):
-        @wraps(func, assigned=available_attrs(func))
+        @wraps(func)
         def inner(request, *args, **kwargs):
             response = func(request, *args, **kwargs)
             response[name] = value

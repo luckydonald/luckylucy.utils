@@ -3,23 +3,15 @@
 # requires-python = ">=3.8"
 # dependencies = [
 #     "pytgbot",
-#     "luckylucy.utils.dependencies",
 #     "luckylucy.utils.logger",
 # ]
 # ///
 from typing import Union
 
-from ....dependencies import import_or_install
 
-try:
-    from pytgbot import Bot
-    from pytgbot.api_types.receivable.peer import ChatMember
-    from pytgbot.exceptions import TgApiException
-except ImportError:  # pragma nocover
-    Bot = import_or_install("pytgbot.bot", "Bot")  # pip install pytgbot
-    ChatMember = import_or_install("pytgbot.api_types.receivable.peer", "ChatMember")  # pip install pytgbot
-    TgApiException = import_or_install("pytgbot.exceptions", "TgApiException")  # pip install pytgbot
-# end try
+from pytgbot import Bot
+from pytgbot.api_types.receivable.peer import ChatMember
+from pytgbot.exceptions import TgApiException
 
 
 from luckylucy.utils.logger import logging

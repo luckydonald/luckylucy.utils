@@ -3,19 +3,12 @@
 # requires-python = ">=3.8"
 # dependencies = [
 #     "django",
-#     "luckylucy.utils.dependencies",
 # ]
 # ///
 """
 Tools to use with django's HttpRequests.
 """
-try:
-    from django.middleware.csrf import CsrfViewMiddleware
-except ImportError:  # pragma nocover
-    from ..dependencies import import_or_install
-
-    CsrfViewMiddleware = import_or_install("django.middleware.csrf.CsrfViewMiddleware", "django")
-# end try
+from django.middleware.csrf import CsrfViewMiddleware
 
 
 __author__ = 'luckydonald'

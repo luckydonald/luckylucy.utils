@@ -6,7 +6,6 @@
 #     "progressbar33",
 #     "python-magic",
 #     "requests",
-#     "luckylucy.utils.dependencies",
 #     "luckylucy.utils.encoding",
 #     "luckylucy.utils.files",
 # ]
@@ -19,7 +18,6 @@ from __future__ import division
 
 __author__ = 'luckydonald'
 
-from .dependencies import import_or_install
 from .files import gettempdir
 from .encoding import to_binary as b
 import hashlib
@@ -29,34 +27,12 @@ import os
 
 from DictObject import DictObject
 
-try:
-    import magic
-except ImportError:  # pragma nocover
-    magic = import_or_install("magic", "python-magic")  # import magic
-# end try
-
-try:
-    import requests
-    from requests.packages.urllib3.exceptions import HTTPError
-except ImportError:  # pragma nocover
-    requests = import_or_install("requests", "requests")  # import requests
-    HTTPError = import_or_install("requests.packages.urllib3.exceptions.HTTPError", "requests")
-# end try
-
-try:
-    import progressbar
-    from progressbar import Widget
-    from progressbar import ETA, Percentage, Bar, FileTransferSpeed, ProgressBar
-except ImportError:  # pragma nocover
-    progressbar_version = ("progressbar" if sys.version < "3.3" else "progressbar33")
-    import_or_install("progressbar", progressbar_version)
-    Widget = import_or_install("progressbar.Widget import Widget", progressbar_version)
-    ETA = import_or_install("progressbar import ETA", progressbar_version)
-    Percentage = import_or_install("progressbar import Percentage", progressbar_version)
-    Bar = import_or_install("progressbar import Bar", progressbar_version)
-    FileTransferSpeed = import_or_install("progressbar import FileTransferSpeed", progressbar_version)
-    ProgressBar = import_or_install("progressbar import ProgressBar", progressbar_version)
-# end try
+import magic
+import requests
+from requests.packages.urllib3.exceptions import HTTPError
+import progressbar
+from progressbar import Widget
+from progressbar import ETA, Percentage, Bar, FileTransferSpeed, ProgressBar
 
 import logging
 
