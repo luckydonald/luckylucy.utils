@@ -94,3 +94,5 @@ example_package >= 1.0
 
 ❯ However, the IDE shows `Relative import outside of a package` warning, is that relevant due to the packaging structure?
 
+❯ Basically the new packaging makes `from luckylucy.utils.install import import_or_install` and `pip_interface` etc. no longer needed, right?
+
