@@ -3,9 +3,11 @@
 # requires-python = ">=3.8"
 # dependencies = [
 #     "setuptools",
+#     "luckylucy.utils.functions",
 #     "luckylucy.utils.logger",
 # ]
 # ///
+from luckylucy.utils.functions import deprecated
 from luckylucy.utils.logger import logging
 
 try:
@@ -23,9 +25,6 @@ except ImportError as e:
 
 from setuptools import find_packages
 
-import warnings
-from functools import wraps
-
 try:
     import importlib
 except ImportError:
@@ -38,21 +37,7 @@ __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
 
 
-def deprecated_installer(function):
-    """Installing packages at runtime is replaced by declaring them as dependencies, which pip installs along."""
-    @wraps(function)
-    def wrapper(*args, **kwargs):
-        warnings.warn(
-            f"{function.__name__}() is deprecated, declare the package as a dependency and import it normally instead.",
-            DeprecationWarning, stacklevel=2,
-        )
-        return function(*args, **kwargs)
-    # end def
-    return wrapper
-# end def
-
-
-@deprecated_installer
+@deprecated("Declare the package as a dependency and import it normally instead.")
 def import_or_install(package_name, pip_name=None):
     """
     Tries to import a package.
@@ -150,7 +135,7 @@ def import_only(package_name, module_list=None):
     return imp
 
 
-@deprecated_installer
+@deprecated("Declare the package as a dependency and import it normally instead.")
 def install_only(pip_name, upgrade=False):
     logger.warn("{install_or_upgrade} package '{pip_name}'.\n"
                 "If that fails, install it manually:\n"
@@ -164,7 +149,7 @@ def install_only(pip_name, upgrade=False):
     return pip_install(args)
 
 
-@deprecated_installer
+@deprecated("Declare the package as a dependency and import it normally instead.")
 def upgrade(pip_name):
     install_only(pip_name, upgrade=True)
 
