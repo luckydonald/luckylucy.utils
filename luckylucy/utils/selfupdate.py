@@ -11,4 +11,13 @@ import sys
 
 __author__ = 'luckydonald'
 
-subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "luckylucy.utils"])
+from luckylucy.utils.decorators import deprecated
+
+
+@deprecated
+def selfupdate():
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "luckylucy.utils"])
+# end def
+
+selfupdate()
+
