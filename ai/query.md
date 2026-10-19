@@ -100,3 +100,5 @@ example_package >= 1.0
 (Just `find_submodules`  and `import_only` should be fine for now)
 Replace calls of any of those functions in our own library with proper requirements and imports on top of the file.
 
+❯ Isn't `@deprecated_installer` basically a duplicate to `@deprecated`  in `luckylucy.utils.functions.deprecated`?
+
