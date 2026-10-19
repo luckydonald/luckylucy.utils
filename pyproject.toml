@@ -3,20 +3,20 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "luckydonald-utils"
-version = "0.84"
+name = "luckylucy.utils"
+version = "0.85"
 description = "A collection of utilities I use across different projects"
 readme = "README.md"
 license = "GPL-2.0-or-later"
-authors = [{ name = "luckydonald", email = "code_utils@luckydonald.de" }]
+authors = [{ name = "luckylucy", email = "luckylucy.utils._.code@luckydonald.de" }]
 requires-python = ">=3.8"
 keywords = [
-    "luckydonald",
+    "luckylucy", "lucky lucy", "luckydonald",
     "utils", "utilities", "utility",
     "python",
     "dependencies", "dependency",
     "download",
-    "progress", "bar",
+    "progress", "bar", "progressbar",
     "encoding",
     "files",
     "interactions",
@@ -48,7 +48,7 @@ classifiers = [
 dependencies = ["pip", "setuptools", "DictObject"]
 
 [project.urls]
-Homepage = "https://github.com/luckydonald/luckydonald-utils"
+Homepage = "https://github.com/luckydonald/luckylucy.utils"
 
 [dependency-groups]
 dev = ["bump-my-version", "twine", "keyring"]
