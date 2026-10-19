@@ -99,3 +99,12 @@ Each step is its own commit (rule 8: land the pure move before changing content)
 - The build backend (`hatchling` assumed) must support selecting a single file and excluding child modules.
 - PyPI normalizes dots in names, so `luckylucy.utils.uvicorns` is published as `luckylucy-utils-uvicorns`. Check that `luckylucy.utils` is available on PyPI before the first upload.
 - The first upload of each new sub-package name needs to be done by the owner's credentials.
+
+## Revision: PEP 723 as the single marker
+
+The hybrid was simplified after the first implementation, only the marker format changed.
+
+- The custom `# /// luckylucy-module` block became the standard PEP 723 `# /// script` block, with the luckylucy settings in `[tool.luckylucy]` inside of it, so `uv run file.py` and editors understand it.
+- `module = true` in a file's block makes the file its own distribution, the same in a folder's `__init__.py` makes the folder one. A `pyproject.toml` in a folder with `[tool.luckylucy] module = true` still works.
+- Unmarked files are part of their closest folder module and their `dependencies` are merged into it. A file with no module above it is an error, since the root `luckylucy.utils` contains no code.
+- The 22 folder `pyproject.toml` files were converted into blocks in the `__init__.py` files, the resulting module tree is identical.
