@@ -2,26 +2,26 @@ all: delete-compiled-shit pip git
 	echo "Done."
 
 delete-compiled-shit:
-	rm -R build/ ; rm -R luckydonald_utils.egg-info/ ; find . -name '*.pyc'
+	rm -R build/ dist/ ; rm -R luckydonald_utils.egg-info/ ; find . -name '*.pyc'
 	find . -name '*.pyc' -delete ; True
 
 upload: pip git
 
 pip-build:
-	python3 setup.py sdist bdist_wheel
+	uv build
 
 dev-dependencies:
-	python3 -m pip install -r requirements-dev.txt
+	uv sync --group dev
 
 test-pip: pip-build dev-dependencies
-	python3 -m twine upload --username luckydonald --skip-existing --repository-url https://test.pypi.org/legacy/ dist/*
+	uv run twine upload --username luckydonald --skip-existing --repository-url https://test.pypi.org/legacy/ dist/*
 
 pip: pip-build
-	python3 -m twine upload --username luckydonald --skip-existing dist/*
+	uv run twine upload --username luckydonald --skip-existing dist/*
 
 git:
 	git push
 
 bump: dev-dependencies
-	bump-my-version show-bump
-	bump-my-version bump patch
+	uv run bump-my-version show-bump
+	uv run bump-my-version bump patch

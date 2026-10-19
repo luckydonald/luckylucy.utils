@@ -22,7 +22,7 @@ To complete one:
 
 ## Todos synced from CalDAV
 
-- [ ] migrate to uv and modern pip deployment tech. — `todo:2075ce3d-3f78-452e-bbec-b2ed4c27d9b3`
+- [x] migrate to uv and modern pip deployment tech. — `todo:2075ce3d-3f78-452e-bbec-b2ed4c27d9b3`
 - [ ] make packages optional to install — `todo:3cde8dfa-dd95-4c9e-95f6-f8222cccdd25`
   > - rename to ˋluckylucy.utilsˋ
   > - Either install ˋluckydonald-utilsˋ as before to get the current set (legacy)

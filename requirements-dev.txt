@@ -1,8 +1,0 @@
-# versioning
-bump-my-version
-
-# pip
-setuptools
-wheel
-twine
-keyring

@@ -15,3 +15,5 @@
 
 #### Previous user prompts:
 
+❯ [@`ai/todos.md`](./todos.md)
+
