@@ -90,3 +90,13 @@ Sort them alphabetically, and add the source above:
 example_package >= 1.0
 ```
 
+❯ Also make sure the `luckylucy.utils` requirements are correct in the files with imports starting with  `from .` , e.g. `from .files import gettempdir` or `from ...logger import logging`
+
+❯ However, the IDE shows `Relative import outside of a package` warning, is that relevant due to the packaging structure?
+
+❯ Basically the new packaging makes `from luckylucy.utils.install import import_or_install` and `pip_interface` etc. no longer needed, right?
+
+❯ OK, deprecate the functions in `luckylucy.utils.dependencies` themself.
+(Just `find_submodules`  and `import_only` should be fine for now)
+Replace calls of any of those functions in our own library with proper requirements and imports on top of the file.
+

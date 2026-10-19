@@ -4,27 +4,15 @@
 # dependencies = [
 #     "flask",
 #     "werkzeug",
-#     "luckylucy.utils.dependencies",
 #     "luckylucy.utils.logger",
 # ]
 # ///
 from luckylucy.utils.logger import logging
 
-try:
-    from werkzeug.exceptions import HTTPException
-    from werkzeug.routing import MapAdapter
-    from flask.globals import _app_ctx_stack, _request_ctx_stack
-    from flask import url_for, request
-
-except ImportError:  # pragma nocover
-    from ..dependencies import import_or_install
-
-    MapAdapter = import_or_install("werkzeug.routing.MapAdapter", "werkzeug")
-    HTTPException = import_or_install("werkzeug.exceptions.HTTPException", "werkzeug")
-    _app_ctx_stack = import_or_install("flask.globals._app_ctx_stack", "flask")
-    url_for, request = import_or_install("flask.url_for", "flask"), import_or_install("flask.request", "flask")
-    _request_ctx_stack = import_or_install("flask.globals._request_ctx_stack", "flask")
-# end try
+from werkzeug.exceptions import HTTPException
+from werkzeug.routing import MapAdapter
+from flask.globals import _app_ctx_stack, _request_ctx_stack
+from flask import url_for, request
 
 
 __author__ = 'luckydonald'

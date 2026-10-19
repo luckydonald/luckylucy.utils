@@ -3,18 +3,11 @@
 # requires-python = ">=3.8"
 # dependencies = [
 #     "Pillow",
-#     "luckylucy.utils.dependencies",
 # ]
 # ///
 
 
-from ..dependencies import import_or_install
-
-try:
-    from PIL import Image
-except ImportError:  # pragma nocover
-    Image = import_or_install("PIL.Image", "Pillow")  # pip install Pillow
-# end try
+from PIL import Image
 
 __author__ = 'luckydonald'
 

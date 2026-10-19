@@ -2,7 +2,6 @@
 # requires-python = ">=3.8"
 # dependencies = [
 #     "pytgbot",
-#     "luckylucy.utils.dependencies",
 #     "luckylucy.utils.exceptions",
 # ]
 #
@@ -12,16 +11,9 @@
 from typing import Type, Dict, TypeVar, Union, Optional
 
 from ..exceptions import assert_type_or_raise
-from ..dependencies import import_or_install
 
-try:
-    from pytgbot.api_types.receivable.updates import Update, Message
-    from pytgbot.api_types.receivable.peer import User
-except ImportError:  # pragma nocover
-    Update = import_or_install("pytgbot.api_types.receivable.updates", "Update")  # pip install pytgbot
-    Message = import_or_install("pytgbot.api_types.receivable.updates", "Message")  # pip install pytgbot
-    User = import_or_install("pytgbot.api_types.receivable.peer", "User")  # pip install pytgbot
-# end try
+from pytgbot.api_types.receivable.updates import Update, Message
+from pytgbot.api_types.receivable.peer import User
 
 __all__ = ['get_language_code', 'l_get']
 

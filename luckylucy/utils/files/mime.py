@@ -2,19 +2,12 @@
 # requires-python = ">=3.8"
 # dependencies = [
 #     "python-magic",
-#     "luckylucy.utils.dependencies",
 # ]
 #
 # [tool.luckylucy]
 # module = true
 # ///
-from ..dependencies import import_or_install
-
-try:
-    import magic
-except ImportError:  # pragma nocover
-    magic = import_or_install("magic", "python-magic")  # pip install python-magic
-# end try
+import magic
 import mimetypes
 
 

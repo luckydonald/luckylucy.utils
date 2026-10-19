@@ -3,22 +3,11 @@
 # requires-python = ">=3.8"
 # dependencies = [
 #     "django",
-#     "luckylucy.utils.dependencies",
 #     "luckylucy.utils.logger",
 # ]
 # ///
-try:
-    from django.http import JsonResponse, HttpResponse
-    from django.conf import settings
-    from django.utils.decorators import available_attrs
-except ImportError:  # pragma nocover
-    from ..dependencies import import_or_install
-
-    available_attrs = import_or_install("django.utils.decorators.available_attrs", "django")
-    JsonResponse = import_or_install("django.http.JsonResponse", "django")
-    HttpResponse = import_or_install("django.http.HttpResponse", "django")
-    settings = import_or_install("django.conf.settings", "django")
-# end try
+from django.http import JsonResponse, HttpResponse
+from django.conf import settings
 from functools import wraps
 from ..logger import logging  # pip install luckydonald-utils
 
@@ -65,7 +54,7 @@ def render_all_exceptions(function):
 
     """
 
-    @wraps(function, assigned=available_attrs(function))
+    @wraps(function)
     def function_callable(request, *args, **kwargs):
         try:
             response = function(request, *args, **kwargs)
@@ -90,7 +79,7 @@ def render_DoOutputException(function):
 
     """
 
-    @wraps(function, assigned=available_attrs(function))
+    @wraps(function)
     def function_callable(request, *args, **kwargs):
         try:
             response = function(request, *args, **kwargs)
@@ -159,7 +148,7 @@ def render_specific_exception(exception_class, exception_render_func=None):
     """
 
     def create_function(function):
-        @wraps(function, assigned=available_attrs(function))
+        @wraps(function)
         def function_callable(request, *args, **kwargs):
             try:
                 response = function(request, *args, **kwargs)

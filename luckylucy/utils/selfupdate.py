@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 # /// script
 # requires-python = ">=3.8"
-# dependencies = [
-#     "luckylucy.utils.dependencies",
-# ]
+# dependencies = []
 #
 # [tool.luckylucy]
 # module = true
 # ///
-from .dependencies import upgrade
+import subprocess
+import sys
 
 __author__ = 'luckydonald'
 
-upgrade("luckydonald-utils")
+subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", "luckylucy.utils"])

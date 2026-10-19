@@ -4,7 +4,6 @@
 # dependencies = [
 #     "pycryptodome",
 #     "usersettings",
-#     "luckylucy.utils.dependencies",
 # ]
 #
 # [tool.luckylucy]
@@ -12,23 +11,11 @@
 # ///
 
 import base64
-from .dependencies import import_or_install
 
-try:
-    from usersettings import Settings
-except ImportError:  # pragma nocover
-    Settings = import_or_install("usersettings.Settings", "usersettings")  # pip install usersettings
-# end try
-
-try:
-    from Crypto import Random
-    from Crypto.Cipher import AES
-    from Crypto.Hash import MD5
-except ImportError:  # pragma nocover
-    Random = import_or_install("Crypto.Random", "pycrypto")  # pip install pycrypto
-    AES = import_or_install("Crypto.Cipher.AES", "pycrypto")  # pip install pycrypto
-    MD5 = import_or_install("Crypto.Hash.MD5", "pycrypto")  # pip install pycrypto
-# end try
+from usersettings import Settings
+from Crypto import Random
+from Crypto.Cipher import AES
+from Crypto.Hash import MD5
 
 __author__ = 'luckydonald'
 

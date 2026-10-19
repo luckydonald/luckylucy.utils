@@ -3,29 +3,19 @@
 # requires-python = ">=3.8"
 # dependencies = [
 #     "django",
-#     "luckylucy.utils.dependencies",
+#     "IPy",
 #     "luckylucy.utils.logger",
 # ]
 # ///
-try:
-    from django.conf import settings
-    from django.core.exceptions import ImproperlyConfigured, MiddlewareNotUsed
-    from django.http import HttpResponseForbidden
-except ImportError:  # pragma nocover
-    from ...dependencies import import_or_install
+from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured, MiddlewareNotUsed
+from django.http import HttpResponseForbidden
+from IPy import IP
 
-    settings = import_or_install("django.conf.settings", "django")
-    ImproperlyConfigured = import_or_install("django.ore.exceptions.ImproperlyConfigured", "django")
-    MiddlewareNotUsed = import_or_install("django.ore.exceptions.MiddlewareNotUsed", "django")
-    HttpResponseForbidden = import_or_install("django.http.HttpResponseForbidden", "django")
-# end try
-from ...logger import logging  # pip install luckydonald-utils
-from ...dependencies import import_or_install
+from ...logger import logging
 
 __author__ = 'luckydonald'
 logger = logging.getLogger(__name__)
-
-IP = import_or_install("IPy.IP", "IPy")  # pip install IPy
 
 
 class AllowFromIPMiddleware(object):
