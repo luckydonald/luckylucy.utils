@@ -1,5 +1,10 @@
 # /// script
-# dependencies = ["typing_extensions"]
+# requires-python = ">=3.10"
+# dependencies = [
+#     "typing_extensions",
+#     "luckylucy.utils.fully_qualified_name",
+#     "luckylucy.utils.logger",
+# ]
 #
 # [tool.luckylucy]
 # module = true

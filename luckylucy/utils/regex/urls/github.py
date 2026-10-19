@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "luckylucy.utils.regex",
+# ]
+# ///
 import re
 
 __author__ = 'luckydonald'

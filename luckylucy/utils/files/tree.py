@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "luckylucy.utils.text",
+# ]
+# ///
 # tree.py
 """
  Written by Doug Dahms, modified by luckydonald 2016

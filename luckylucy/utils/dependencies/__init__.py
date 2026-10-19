@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 # /// script
-# dependencies = ["pip", "setuptools"]
-#
 # [tool.luckylucy]
 # module = true
 # ///

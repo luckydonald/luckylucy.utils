@@ -5,7 +5,11 @@ Generates one distribution per marked `luckylucy.utils` module, so each one is i
 The markers are standard PEP 723 inline blocks at the top of a file, which can also list the `dependencies` of that file:
 ```py
 # /// script
-# dependencies = ["uvicorn"]
+# requires-python = ">=3.8"
+# dependencies = [
+#     "uvicorn",
+#     "luckylucy.utils.logger",
+# ]
 #
 # [tool.luckylucy]
 # module = true
@@ -15,6 +19,9 @@ The markers are standard PEP 723 inline blocks at the top of a file, which can a
 - `module = true` in a file makes that file a distribution of its own.
 - `module = true` in the block of an `__init__.py` (or in a `pyproject.toml` with `[tool.luckylucy]`) makes that folder a distribution.
 - Every other file is part of its closest folder module, and its `dependencies` are merged into the ones of that folder.
+- A dependency starting with `luckylucy.utils.` is an internal one, it gets the shared version pinned.
+- `requires-python` of the files is merged into the folder as well, the highest minimum wins.
+- A folder marker in `__init__.py` needs just `module = true`, everything else is filled in from the files and the modules inside.
 
 Everything else is derived:
 
@@ -50,6 +57,7 @@ IGNORED_DIRS = {"__pycache__"}
 class Metadata:
     dependencies: list[str]
     module: bool
+    requires_python: str | None = None
 # end class
 
 
@@ -59,6 +67,8 @@ class Module:
     path: Path
     is_file: bool
     external_dependencies: list[str]
+    requires_python: str | None = None
+    declared_modules: set[str] = field(default_factory=set)
     files: list[Path] = field(default_factory=list)
     imported_modules: set[str] = field(default_factory=set)
     children: list[str] = field(default_factory=list)
@@ -76,6 +86,7 @@ def read_metadata(path: Path) -> Metadata | None:
         return Metadata(
             list(data.get("project", {}).get("dependencies", [])),
             bool(data.get("tool", {}).get("luckylucy", {}).get("module", False)),
+            data.get("project", {}).get("requires-python"),
         )
     # end if
     for match in INLINE_BLOCK.finditer(path.read_text(encoding="utf-8")):
@@ -87,6 +98,7 @@ def read_metadata(path: Path) -> Metadata | None:
         return Metadata(
             list(data.get("dependencies", [])),
             bool(data.get("tool", {}).get("luckylucy", {}).get("module", False)),
+            data.get("requires-python"),
         )
     # end for
     return None
@@ -95,6 +107,38 @@ def read_metadata(path: Path) -> Metadata | None:
 
 def merge(existing: list[str], new: list[str]) -> list[str]:
     return [*existing, *(dependency for dependency in new if dependency not in existing)]
+# end def
+
+
+def minimum_version(requires_python: str) -> tuple[int, ...]:
+    match = re.fullmatch(r">=\s*(\d+(?:\.\d+)*)", requires_python.strip())
+    if match is None:
+        raise SystemExit(f"Only `>=X.Y` is supported as `requires-python`, got {requires_python!r}.")
+    # end if
+    return tuple(int(part) for part in match.group(1).split("."))
+# end def
+
+
+def merge_requires_python(existing: str | None, new: str | None) -> str | None:
+    """The stricter of both, so a folder needs at least what its most demanding file needs."""
+    if existing is None or new is None:
+        return existing or new
+    # end if
+    return existing if minimum_version(existing) >= minimum_version(new) else new
+# end def
+
+
+def absorb(module: "Module", found: Metadata) -> None:
+    """Merges the metadata of a file or marker into the module."""
+    external = [dependency for dependency in found.dependencies if not is_internal(dependency)]
+    module.external_dependencies = merge(module.external_dependencies, external)
+    module.declared_modules.update(dependency for dependency in found.dependencies if is_internal(dependency))
+    module.requires_python = merge_requires_python(module.requires_python, found.requires_python)
+# end def
+
+
+def is_internal(dependency: str) -> bool:
+    return dependency.startswith(ROOT_NAME + ".")
 # end def
 
 
@@ -116,7 +160,8 @@ def discover(source_root: Path) -> dict[str, Module]:
         if path.is_dir():
             found = read_metadata(path)
             if found is not None and found.module:
-                modules[dotted(source_root, path)] = Module(dotted(source_root, path), path, False, found.dependencies)
+                modules[dotted(source_root, path)] = Module(dotted(source_root, path), path, False, [])
+                absorb(modules[dotted(source_root, path)], found)
             # end if
         elif path.suffix == ".py":
             found = read_metadata(path)
@@ -131,7 +176,8 @@ def discover(source_root: Path) -> dict[str, Module]:
                 name = dotted(source_root, path.parent)
                 modules.setdefault(name, Module(name, path.parent, False, []))
             else:
-                modules[dotted(source_root, path)] = Module(dotted(source_root, path), path, True, found.dependencies)
+                modules[dotted(source_root, path)] = Module(dotted(source_root, path), path, True, [])
+                absorb(modules[dotted(source_root, path)], found)
             # end if
         # end if
     # end for
@@ -159,7 +205,7 @@ def discover(source_root: Path) -> dict[str, Module]:
         # end if
         owner.files.append(path)
         if path in metadata:
-            owner.external_dependencies = merge(owner.external_dependencies, metadata[path].dependencies)
+            absorb(owner, metadata[path])
         # end if
     # end for
     return modules
@@ -221,6 +267,15 @@ def owner_of(name: str, modules: dict[str, Module]) -> str | None:
 def resolve(source_root: Path, modules: dict[str, Module]) -> None:
     """Fills in `imported_modules` and `children` of every module."""
     for module in modules.values():
+        for name in module.declared_modules:
+            owner = owner_of(name, modules)
+            if owner is None:
+                raise SystemExit(f"{module.name} depends on {name}, which is not part of any module.")
+            # end if
+            if owner != module.name:
+                module.imported_modules.add(owner)
+            # end if
+        # end for
         for file in module.files:
             if file.suffix != ".py":
                 continue
@@ -247,7 +302,7 @@ def toml_list(values: list[str]) -> str:
 # end def
 
 
-def render_pyproject(name: str, version: str, dependencies: list[str], root_project: dict) -> str:
+def render_pyproject(name: str, version: str, dependencies: list[str], root_project: dict, requires_python: str | None = None) -> str:
     author = root_project["authors"][0]
     lines = [
         "[build-system]",
@@ -260,7 +315,7 @@ def render_pyproject(name: str, version: str, dependencies: list[str], root_proj
         f"description = {json.dumps(root_project['description'] + ' (' + name + ')')}",
         f"license = {json.dumps(root_project['license'])}",
         f"authors = [{{ name = {json.dumps(author['name'])}, email = {json.dumps(author['email'])} }}]",
-        f"requires-python = {json.dumps(root_project['requires-python'])}",
+        f"requires-python = {json.dumps(requires_python or root_project['requires-python'])}",
         f"dependencies = {toml_list(dependencies)}",
         "",
         "[project.urls]",
@@ -292,7 +347,7 @@ def generate(source_root: Path, modules: dict[str, Module], root_project: dict, 
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(file, target)
         # end for
-        text = render_pyproject(module.name, version, dependencies_of(module, version), root_project)
+        text = render_pyproject(module.name, version, dependencies_of(module, version), root_project, module.requires_python)
         (project / "pyproject.toml").write_text(text + 'packages = ["luckylucy"]\n', encoding="utf-8")
         projects.append(project)
     # end for

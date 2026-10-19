@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "Pillow",
+#     "luckylucy.utils.dependencies",
+# ]
+# ///
 
 
 from ..dependencies import import_or_install

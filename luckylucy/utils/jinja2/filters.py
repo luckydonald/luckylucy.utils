@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 # /// script
-# dependencies = []
+# requires-python = ">=3.8"
+# dependencies = [
+#     "luckylucy.utils.logger",
+# ]
 #
 # [tool.luckylucy]
 # module = true

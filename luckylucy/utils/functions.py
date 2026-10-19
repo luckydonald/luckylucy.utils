@@ -1,5 +1,8 @@
 # /// script
-# dependencies = []
+# requires-python = ">=3.8"
+# dependencies = [
+#     "luckylucy.utils.clazzes",
+# ]
 #
 # [tool.luckylucy]
 # module = true

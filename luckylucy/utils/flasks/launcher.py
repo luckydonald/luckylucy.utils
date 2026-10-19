@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "flask",
+#     "werkzeug",
+#     "luckylucy.utils.logger",
+# ]
+# ///
 from luckylucy.utils.logger import logging
 import typing
 

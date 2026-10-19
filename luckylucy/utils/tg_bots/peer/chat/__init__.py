@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 # /// script
-# dependencies = ["pytgbot"]
-#
 # [tool.luckylucy]
 # module = true
 # ///

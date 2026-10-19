@@ -1,6 +1,15 @@
 # -*- coding: utf-8 -*-
 # /// script
-# dependencies = ["DictObject", "python-magic", "progressbar33", "requests"]
+# requires-python = ">=3.8"
+# dependencies = [
+#     "DictObject",
+#     "progressbar33",
+#     "python-magic",
+#     "requests",
+#     "luckylucy.utils.dependencies",
+#     "luckylucy.utils.encoding",
+#     "luckylucy.utils.files",
+# ]
 #
 # [tool.luckylucy]
 # module = true

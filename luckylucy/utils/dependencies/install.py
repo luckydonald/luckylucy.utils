@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-
+# /// script
+# requires-python = ">=3.8"
+# dependencies = [
+#     "setuptools",
+#     "luckylucy.utils.logger",
+# ]
+# ///
 from luckylucy.utils.logger import logging
 
 try:
