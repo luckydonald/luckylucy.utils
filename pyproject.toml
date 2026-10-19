@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "luckydonald-utils"
-dynamic = ["version"]
+version = "0.84"
 description = "A collection of utilities I use across different projects"
 readme = "README.md"
 license = "GPL-2.0-or-later"
@@ -28,9 +28,6 @@ Homepage = "https://github.com/luckydonald/luckydonald-utils"
 
 [dependency-groups]
 dev = ["bump-my-version", "twine", "keyring"]
-
-[tool.setuptools.dynamic]
-version = { attr = "luckylucy.utils.__version__" }
 
 [tool.setuptools.packages.find]
 include = ["luckylucy.utils", "luckylucy.utils.*"]

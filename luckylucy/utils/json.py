@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-from . import py2
+from .compat import py2
 
 __author__ = 'luckydonald'
 

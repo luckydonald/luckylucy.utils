@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from .. import py3
+from ..compat import py3
 
 __author__ = 'luckydonald'
 

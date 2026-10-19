@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from .. import py3
+from ..compat import py3
 from ..logger import logging
 from ..encoding import to_binary
 from ..eastereggs.headers import get_headers
