@@ -122,3 +122,5 @@ Same with `encoding.py`, and probably every file checking `sys.version`.
 
 ❯ Fix [@`ai/errors/1.txt`](./errors/1.txt)
 
+❯ I believe I'm hitting that initial upload issue, [@`ai/errors/2.txt`](./errors/2.txt)
+
