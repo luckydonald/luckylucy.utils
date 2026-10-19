@@ -4,7 +4,10 @@ import tomllib
 import unittest
 from pathlib import Path
 
-from scripts.build_modules import ROOT_NAME, discover, generate, imported_names, owner_of, parent_name, read_metadata, resolve
+from scripts.build_modules import (
+    ROOT_NAME, discover, generate, imported_names, owner_of, parent_name, read_metadata, render_requirements, resolve,
+    write_requirements,
+)
 
 REPOSITORY = Path(__file__).parent.parent
 ROOT_PROJECT = {
@@ -139,6 +142,24 @@ class BuildModulesTest(unittest.TestCase):
             ["luckylucy.utils.logger==1.2", "luckylucy.utils.old==1.2", "luckylucy.utils.plain==1.2", "luckylucy.utils.web==1.2"],
             "the root depends on all top level modules, but not the nested ones",
         )
+    # end def
+
+    def test_requirements_are_sorted_with_their_sources(self) -> None:
+        write(self.source / "web" / "also.py", block(["Flask >= 1.0"], False))
+        write(self.source / "plain2.py", block(["flask", "attrs"], True))
+        modules = discover(self.source)
+        self.assertEqual(
+            render_requirements(modules),
+            "# luckylucy.utils.old\n# luckylucy.utils.plain2\nattrs\n\n"
+            "# luckylucy.utils.plain2\n# luckylucy.utils.web\nflask\n\n"
+            "# luckylucy.utils.web\nFlask >= 1.0\n\n"
+            "# luckylucy.utils.web.extra\npytz\n\n"
+            "# luckylucy.utils.web\nrequests\n",
+        )
+        path = Path(self.temp.name) / "requirements.txt"
+        write_requirements(modules, path)
+        write_requirements(modules, path)
+        self.assertEqual((path.parent / ".gitignore").read_text().count("/requirements.txt"), 1, "added once")
     # end def
 
     def test_repository_blocks_list_the_imported_modules(self) -> None:
